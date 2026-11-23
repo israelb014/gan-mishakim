@@ -1,0 +1,554 @@
+{
+ "who_plays": {
+  "lang": "he",
+  "text": "מי משחק היום?"
+ },
+ "name_hodaya": {
+  "lang": "he",
+  "text": "הודיה"
+ },
+ "name_matan": {
+  "lang": "he",
+  "text": "מתן"
+ },
+ "hello_hodaya": {
+  "lang": "he",
+  "text": "שלום הודיה!"
+ },
+ "hello_matan": {
+  "lang": "he",
+  "text": "שלום מתן!"
+ },
+ "t_math": {
+  "lang": "he",
+  "text": "חשבון בבועות"
+ },
+ "t_word": {
+  "lang": "he",
+  "text": "המילה החסרה"
+ },
+ "t_zoo": {
+  "lang": "he",
+  "text": "אנגלית בגן החיות"
+ },
+ "t_clock": {
+  "lang": "he",
+  "text": "מה השעה?"
+ },
+ "t_letter": {
+  "lang": "he",
+  "text": "מצא את האות"
+ },
+ "t_count": {
+  "lang": "he",
+  "text": "בוא נספור"
+ },
+ "t_album": {
+  "lang": "he",
+  "text": "האלבום שלי"
+ },
+ "inst_math": {
+  "lang": "he",
+  "text": "כמה זה? בחרי את הבועה הנכונה"
+ },
+ "inst_word": {
+  "lang": "he",
+  "text": "איזו אות חסרה במילה?"
+ },
+ "inst_zoo": {
+  "lang": "he",
+  "text": "איזו חיה זו?"
+ },
+ "inst_clock": {
+  "lang": "he",
+  "text": "מה השעה בשעון?"
+ },
+ "try_m": {
+  "lang": "he",
+  "text": "כמעט! נסה שוב"
+ },
+ "try_f": {
+  "lang": "he",
+  "text": "כמעט! נסי שוב"
+ },
+ "praise_0": {
+  "lang": "he",
+  "text": "כל הכבוד!"
+ },
+ "praise_1": {
+  "lang": "he",
+  "text": "מצוין!"
+ },
+ "praise_2": {
+  "lang": "he",
+  "text": "יופי!"
+ },
+ "champ_m": {
+  "lang": "he",
+  "text": "אלוף!"
+ },
+ "champ_f": {
+  "lang": "he",
+  "text": "אלופה!"
+ },
+ "new_sticker": {
+  "lang": "he",
+  "text": "קיבלת מדבקה חדשה!",
+  "say": "קִיבַּלְתָּ מַדְבֵּקָה חֲדָשָׁה!"
+ },
+ "new_sticker_f": {
+  "lang": "he",
+  "text": "קיבלת מדבקה חדשה!",
+  "say": "קִיבַּלְתְּ מַדְבֵּקָה חֲדָשָׁה!"
+ },
+ "rest": {
+  "lang": "he",
+  "text": "זמן לנוח! נתראה מחר"
+ },
+ "parents": {
+  "lang": "he",
+  "text": "אזור הורים"
+ },
+ "word_dog": {
+  "lang": "he",
+  "text": "כלב"
+ },
+ "word_cat": {
+  "lang": "he",
+  "text": "חתול"
+ },
+ "word_fish": {
+  "lang": "he",
+  "text": "דג"
+ },
+ "word_house": {
+  "lang": "he",
+  "text": "בית"
+ },
+ "word_tree": {
+  "lang": "he",
+  "text": "עץ"
+ },
+ "word_sun": {
+  "lang": "he",
+  "text": "שמש"
+ },
+ "word_moon": {
+  "lang": "he",
+  "text": "ירח"
+ },
+ "word_ball": {
+  "lang": "he",
+  "text": "כדור"
+ },
+ "word_apple": {
+  "lang": "he",
+  "text": "תפוח"
+ },
+ "word_banana": {
+  "lang": "he",
+  "text": "בננה"
+ },
+ "word_flower": {
+  "lang": "he",
+  "text": "פרח"
+ },
+ "word_book": {
+  "lang": "he",
+  "text": "ספר",
+  "say": "סֵפֶר"
+ },
+ "word_cup": {
+  "lang": "he",
+  "text": "כוס"
+ },
+ "word_shoe": {
+  "lang": "he",
+  "text": "נעל",
+  "say": "נַעַל"
+ },
+ "word_hat": {
+  "lang": "he",
+  "text": "כובע"
+ },
+ "word_car": {
+  "lang": "he",
+  "text": "מכונית"
+ },
+ "word_bus": {
+  "lang": "he",
+  "text": "אוטובוס"
+ },
+ "word_horse": {
+  "lang": "he",
+  "text": "סוס"
+ },
+ "word_cow": {
+  "lang": "he",
+  "text": "פרה",
+  "say": "פָּרָה"
+ },
+ "word_bird": {
+  "lang": "he",
+  "text": "ציפור"
+ },
+ "word_cloud": {
+  "lang": "he",
+  "text": "ענן"
+ },
+ "word_chair": {
+  "lang": "he",
+  "text": "כיסא"
+ },
+ "word_clock": {
+  "lang": "he",
+  "text": "שעון"
+ },
+ "word_cake": {
+  "lang": "he",
+  "text": "עוגה"
+ },
+ "en_lion": {
+  "lang": "en",
+  "text": "lion"
+ },
+ "en_cat": {
+  "lang": "en",
+  "text": "cat"
+ },
+ "en_dog": {
+  "lang": "en",
+  "text": "dog"
+ },
+ "en_fish": {
+  "lang": "en",
+  "text": "fish"
+ },
+ "en_bird": {
+  "lang": "en",
+  "text": "bird"
+ },
+ "en_cow": {
+  "lang": "en",
+  "text": "cow"
+ },
+ "en_horse": {
+  "lang": "en",
+  "text": "horse"
+ },
+ "en_duck": {
+  "lang": "en",
+  "text": "duck"
+ },
+ "en_monkey": {
+  "lang": "en",
+  "text": "monkey"
+ },
+ "en_elephant": {
+  "lang": "en",
+  "text": "elephant"
+ },
+ "en_frog": {
+  "lang": "en",
+  "text": "frog"
+ },
+ "en_rabbit": {
+  "lang": "en",
+  "text": "rabbit"
+ },
+ "num_1": {
+  "lang": "he",
+  "text": "אחת",
+  "say": "אַחַת"
+ },
+ "num_2": {
+  "lang": "he",
+  "text": "שתיים",
+  "say": "שְׁתַּיִם"
+ },
+ "num_3": {
+  "lang": "he",
+  "text": "שלוש",
+  "say": "שָׁלוֹשׁ"
+ },
+ "num_4": {
+  "lang": "he",
+  "text": "ארבע",
+  "say": "אַרְבַּע"
+ },
+ "num_5": {
+  "lang": "he",
+  "text": "חמש",
+  "say": "חָמֵשׁ"
+ },
+ "num_6": {
+  "lang": "he",
+  "text": "שש",
+  "say": "שֵׁשׁ"
+ },
+ "num_7": {
+  "lang": "he",
+  "text": "שבע",
+  "say": "שֶׁבַע"
+ },
+ "num_8": {
+  "lang": "he",
+  "text": "שמונה",
+  "say": "שְׁמוֹנֶה"
+ },
+ "num_9": {
+  "lang": "he",
+  "text": "תשע",
+  "say": "תֵּשַׁע"
+ },
+ "num_10": {
+  "lang": "he",
+  "text": "עשר",
+  "say": "עֶשֶׂר"
+ },
+ "letter_alef": {
+  "lang": "he",
+  "text": "אָלֶף",
+  "say": "אָלֶף"
+ },
+ "q_letter_alef": {
+  "lang": "he",
+  "text": "איפה האות אָלֶף?",
+  "say": "אֵיפֹה הָאוֹת אָלֶף?"
+ },
+ "letter_bet": {
+  "lang": "he",
+  "text": "בֵּית",
+  "say": "בֵּית"
+ },
+ "q_letter_bet": {
+  "lang": "he",
+  "text": "איפה האות בֵּית?",
+  "say": "אֵיפֹה הָאוֹת בֵּית?"
+ },
+ "letter_gimel": {
+  "lang": "he",
+  "text": "גִּימֶל",
+  "say": "גִּימֶל"
+ },
+ "q_letter_gimel": {
+  "lang": "he",
+  "text": "איפה האות גִּימֶל?",
+  "say": "אֵיפֹה הָאוֹת גִּימֶל?"
+ },
+ "letter_dalet": {
+  "lang": "he",
+  "text": "דָּלֶת",
+  "say": "דָּלֶת"
+ },
+ "q_letter_dalet": {
+  "lang": "he",
+  "text": "איפה האות דָּלֶת?",
+  "say": "אֵיפֹה הָאוֹת דָּלֶת?"
+ },
+ "letter_he": {
+  "lang": "he",
+  "text": "הֵא",
+  "say": "הֵא"
+ },
+ "q_letter_he": {
+  "lang": "he",
+  "text": "איפה האות הֵא?",
+  "say": "אֵיפֹה הָאוֹת הֵא?"
+ },
+ "letter_vav": {
+  "lang": "he",
+  "text": "וָו",
+  "say": "וָו"
+ },
+ "q_letter_vav": {
+  "lang": "he",
+  "text": "איפה האות וָו?",
+  "say": "אֵיפֹה הָאוֹת וָו?"
+ },
+ "letter_zayin": {
+  "lang": "he",
+  "text": "זַיִן",
+  "say": "זַיִן"
+ },
+ "q_letter_zayin": {
+  "lang": "he",
+  "text": "איפה האות זַיִן?",
+  "say": "אֵיפֹה הָאוֹת זַיִן?"
+ },
+ "letter_het": {
+  "lang": "he",
+  "text": "חֵית",
+  "say": "חֵית"
+ },
+ "q_letter_het": {
+  "lang": "he",
+  "text": "איפה האות חֵית?",
+  "say": "אֵיפֹה הָאוֹת חֵית?"
+ },
+ "letter_tet": {
+  "lang": "he",
+  "text": "טֵית",
+  "say": "טֵית"
+ },
+ "q_letter_tet": {
+  "lang": "he",
+  "text": "איפה האות טֵית?",
+  "say": "אֵיפֹה הָאוֹת טֵית?"
+ },
+ "letter_yod": {
+  "lang": "he",
+  "text": "יוּד",
+  "say": "יוּד"
+ },
+ "q_letter_yod": {
+  "lang": "he",
+  "text": "איפה האות יוּד?",
+  "say": "אֵיפֹה הָאוֹת יוּד?"
+ },
+ "letter_kaf": {
+  "lang": "he",
+  "text": "כַּף",
+  "say": "כַּף"
+ },
+ "q_letter_kaf": {
+  "lang": "he",
+  "text": "איפה האות כַּף?",
+  "say": "אֵיפֹה הָאוֹת כַּף?"
+ },
+ "letter_lamed": {
+  "lang": "he",
+  "text": "לָמֶד",
+  "say": "לָמֶד"
+ },
+ "q_letter_lamed": {
+  "lang": "he",
+  "text": "איפה האות לָמֶד?",
+  "say": "אֵיפֹה הָאוֹת לָמֶד?"
+ },
+ "letter_mem": {
+  "lang": "he",
+  "text": "מֵם",
+  "say": "מֵם"
+ },
+ "q_letter_mem": {
+  "lang": "he",
+  "text": "איפה האות מֵם?",
+  "say": "אֵיפֹה הָאוֹת מֵם?"
+ },
+ "letter_nun": {
+  "lang": "he",
+  "text": "נוּן",
+  "say": "נוּן"
+ },
+ "q_letter_nun": {
+  "lang": "he",
+  "text": "איפה האות נוּן?",
+  "say": "אֵיפֹה הָאוֹת נוּן?"
+ },
+ "letter_samekh": {
+  "lang": "he",
+  "text": "סָמֶךְ",
+  "say": "סָמֶךְ"
+ },
+ "q_letter_samekh": {
+  "lang": "he",
+  "text": "איפה האות סָמֶךְ?",
+  "say": "אֵיפֹה הָאוֹת סָמֶךְ?"
+ },
+ "letter_ayin": {
+  "lang": "he",
+  "text": "עַיִן",
+  "say": "עַיִן"
+ },
+ "q_letter_ayin": {
+  "lang": "he",
+  "text": "איפה האות עַיִן?",
+  "say": "אֵיפֹה הָאוֹת עַיִן?"
+ },
+ "letter_pe": {
+  "lang": "he",
+  "text": "פֵּא",
+  "say": "פֵּא"
+ },
+ "q_letter_pe": {
+  "lang": "he",
+  "text": "איפה האות פֵּא?",
+  "say": "אֵיפֹה הָאוֹת פֵּא?"
+ },
+ "letter_tsadi": {
+  "lang": "he",
+  "text": "צָדִי",
+  "say": "צָדִי"
+ },
+ "q_letter_tsadi": {
+  "lang": "he",
+  "text": "איפה האות צָדִי?",
+  "say": "אֵיפֹה הָאוֹת צָדִי?"
+ },
+ "letter_qof": {
+  "lang": "he",
+  "text": "קוּף",
+  "say": "קוּף"
+ },
+ "q_letter_qof": {
+  "lang": "he",
+  "text": "איפה האות קוּף?",
+  "say": "אֵיפֹה הָאוֹת קוּף?"
+ },
+ "letter_resh": {
+  "lang": "he",
+  "text": "רֵישׁ",
+  "say": "רֵישׁ"
+ },
+ "q_letter_resh": {
+  "lang": "he",
+  "text": "איפה האות רֵישׁ?",
+  "say": "אֵיפֹה הָאוֹת רֵישׁ?"
+ },
+ "letter_shin": {
+  "lang": "he",
+  "text": "שִׁין",
+  "say": "שִׁין"
+ },
+ "q_letter_shin": {
+  "lang": "he",
+  "text": "איפה האות שִׁין?",
+  "say": "אֵיפֹה הָאוֹת שִׁין?"
+ },
+ "letter_tav": {
+  "lang": "he",
+  "text": "תָּו",
+  "say": "תָּו"
+ },
+ "q_letter_tav": {
+  "lang": "he",
+  "text": "איפה האות תָּו?",
+  "say": "אֵיפֹה הָאוֹת תָּו?"
+ },
+ "q_count_apple": {
+  "lang": "he",
+  "text": "כמה תפוחים יש?",
+  "say": "כַּמָּה תַּפּוּחִים יֵשׁ?"
+ },
+ "q_count_balloon": {
+  "lang": "he",
+  "text": "כמה בלונים יש?",
+  "say": "כַּמָּה בָּלוֹנִים יֵשׁ?"
+ },
+ "q_count_fish": {
+  "lang": "he",
+  "text": "כמה דגים יש?",
+  "say": "כַּמָּה דָּגִים יֵשׁ?"
+ },
+ "q_count_car": {
+  "lang": "he",
+  "text": "כמה מכוניות יש?",
+  "say": "כַּמָּה מְכוֹנִיּוֹת יֵשׁ?"
+ },
+ "q_count_star": {
+  "lang": "he",
+  "text": "כמה כוכבים יש?",
+  "say": "כַּמָּה כּוֹכָבִים יֵשׁ?"
+ }
+}
