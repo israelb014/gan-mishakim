@@ -5,9 +5,24 @@
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 function h(html) { const t = document.createElement('template'); t.innerHTML = html.trim(); return t.content.firstElementChild; }
-const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
-const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
-function shuffle(arr) { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+/* Random numbers: Math.random by default; RNG.seed(n) switches to a seeded generator (mulberry32) so a level
+   generates the same questions every time it is played. RNG.free() goes back to Math.random. */
+const RNG = (() => {
+  let f = Math.random;
+  return {
+    r: () => f(),
+    seed(n) {
+      let a = n >>> 0;
+      f = () => { a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+    },
+    free() { f = Math.random; },
+  };
+})();
+const hashStr = (s) => { let x = 2166136261; for (let i = 0; i < s.length; i++) { x ^= s.charCodeAt(i); x = Math.imul(x, 16777619); } return x >>> 0; };
+const rnd = (a, b) => a + Math.floor(RNG.r() * (b - a + 1));
+const pick = (arr) => arr[Math.floor(RNG.r() * arr.length)];
+function shuffle(arr) { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(RNG.r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 const todayStr = () => { const d = new Date(); return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`; };
 
@@ -26,34 +41,72 @@ function starsHTML(n, max = 3) {
   return `<div class="stars">${Array.from({ length: max }, (_, i) => `<span class="${i < n ? '' : 'off'}">${ART.icon('star')}</span>`).join('')}</div>`;
 }
 
-/* ---------- storage (localStorage, always try/catch) ---------- */
+/* ---------- storage ----------
+   Web: localStorage. Desktop app: the preload bridge (window.ganDesktop.store) keeps one JSON file in the app's
+   own folder, so progress is the same whether the game runs from the live site or from the bundled copy. */
 const Store = (() => {
   const KEY = 'gan-mishakim-v1';
+  const bridge = window.ganDesktop && window.ganDesktop.store;
+  const backend = {
+    get() {
+      try { if (bridge) { const v = bridge.get(KEY); if (v) return v; } } catch (e) { /* ignore */ }
+      try { return localStorage.getItem(KEY); } catch (e) { return null; } // web, or first run of the desktop app
+    },
+    set(v) {
+      try { if (bridge) bridge.set(KEY, v); } catch (e) { /* ignore */ }
+      try { localStorage.setItem(KEY, v); } catch (e) { /* ignore */ }
+    },
+  };
+  const blankGame = () => ({ best: 0, rounds: 0, won: 0, level: 1, stars: {}, d: {}, adj: 0, hist: [] });
   const blankChild = () => ({
-    stars: 0, stickers: 0, newSticker: false, games: {},
-    settings: { difficulty: 'medium', limit: 0, sound: true },
+    stars: 0, spent: 0, stickers: [], newSticker: false, games: {},
+    settings: { difficulty: 'auto', limit: 0, sound: true },
     time: { date: todayStr(), secs: 0, unlocked: false },
+    daily: { date: '', done: false, stars: 0 },
+    outfit: { color: null, hat: null, glasses: null, cape: null }, owned: [],
   });
-  let data = { profiles: { hodaya: blankChild(), matan: blankChild() } };
+  let data = { v: 2, profiles: { hodaya: blankChild(), matan: blankChild() } };
+
+  /* v1 -> v2: stickers were a count, difficulty default was 'medium', a game was one 10-question round. */
+  function migrateChild(p, b) {
+    const c = { ...b, ...p, settings: { ...b.settings, ...(p.settings || {}) }, time: { ...b.time, ...(p.time || {}) },
+      daily: { ...b.daily, ...(p.daily || {}) }, outfit: { ...b.outfit, ...(p.outfit || {}) }, owned: p.owned || [], games: {} };
+    const OLD_STICKERS = ['lion', 'rocket', 'apple', 'car', 'elephant', 'planet', 'banana', 'bus', 'monkey', 'moon', 'strawberry', 'train',
+      'frog', 'ufo', 'grapes', 'airplane', 'rabbit', 'comet', 'orange', 'boat', 'duck', 'astronaut', 'cherries', 'bicycle'];
+    if (typeof p.stickers === 'number') c.stickers = OLD_STICKERS.slice(0, p.stickers);
+    if (!Array.isArray(c.stickers)) c.stickers = [];
+    for (const [g, gs] of Object.entries(p.games || {})) {
+      const n = { ...blankGame(), ...gs };
+      if (gs.level == null) { // old rounds won become completed levels
+        n.level = (gs.won || 0) + 1;
+        for (let l = 1; l <= (gs.won || 0); l++) n.stars[l] = l === gs.won ? Math.max(2, gs.best || 2) : 2;
+      }
+      c.games[g] = n;
+    }
+    return c;
+  }
   try {
-    const raw = localStorage.getItem(KEY);
+    const raw = backend.get();
     if (raw) {
       const d = JSON.parse(raw);
       if (d && d.profiles) for (const k of ['hodaya', 'matan']) {
-        const b = blankChild(), p = d.profiles[k] || {};
-        data.profiles[k] = { ...b, ...p, settings: { ...b.settings, ...(p.settings || {}) }, time: { ...b.time, ...(p.time || {}) }, games: p.games || {} };
+        const p = d.profiles[k] || {};
+        data.profiles[k] = migrateChild(p, blankChild());
+        if (!d.v && data.profiles[k].settings.difficulty === 'medium') data.profiles[k].settings.difficulty = 'auto';
       }
     }
   } catch (e) { /* storage unavailable: play without saving */ }
-  function save() { try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (e) { /* ignore */ } }
+  function save() { try { backend.set(JSON.stringify(data)); } catch (e) { /* ignore */ } }
   function child(id) {
     const c = data.profiles[id];
     if (c.time.date !== todayStr()) { c.time = { date: todayStr(), secs: 0, unlocked: false }; save(); }
     return c;
   }
-  function game(id, g) { const c = child(id); return c.games[g] || (c.games[g] = { best: 0, rounds: 0, won: 0 }); }
+  function game(id, g) { const c = child(id); return c.games[g] || (c.games[g] = blankGame()); }
   function reset(id) { data.profiles[id] = { ...blankChild(), settings: data.profiles[id].settings }; save(); }
-  return { save, child, game, reset, get data() { return data; } };
+  const wallet = (id) => { const c = child(id); return c.stars - c.spent; };
+  save();
+  return { save, child, game, reset, wallet, get data() { return data; } };
 })();
 
 /* ---------- sound effects: synthesized with Web Audio ---------- */

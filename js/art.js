@@ -12,15 +12,17 @@ const ART = (() => {
   const cheek = (x, y, r = 8) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#f49ab0" opacity=".6"/>`;
 
   /* ---------------- Popo the mascot (viewBox 0 0 220 260) ---------------- */
-  function popo(mood = 'happy') {
+  function popo(mood = 'happy', outfit = api.outfit) {
+    const o = outfit || {}, C = (api.POPO_COLORS && api.POPO_COLORS[o.color]) || { body: '#3CC2B4', arm: '#1FA89C', leg: '#1A9D92' };
+    const back = api.wearBack ? api.wearBack(o) : '', front = api.wearFront ? api.wearFront(o) : '';
     const sleep = mood === 'sleep';
     const armR = mood === 'point'
-      ? `<path d="M168 140 q30 -10 46 -24" stroke="#1FA89C" stroke-width="18" stroke-linecap="round" fill="none"/>`
-      : sleep ? `<path d="M170 160 q14 18 4 34" stroke="#1FA89C" stroke-width="18" stroke-linecap="round" fill="none"/>`
-      : `<path d="M168 150 q28 -16 34 -52" stroke="#1FA89C" stroke-width="18" stroke-linecap="round" fill="none"/>`;
+      ? `<path d="M168 140 q30 -10 46 -24" stroke="${C.arm}" stroke-width="18" stroke-linecap="round" fill="none"/>`
+      : sleep ? `<path d="M170 160 q14 18 4 34" stroke="${C.arm}" stroke-width="18" stroke-linecap="round" fill="none"/>`
+      : `<path d="M168 150 q28 -16 34 -52" stroke="${C.arm}" stroke-width="18" stroke-linecap="round" fill="none"/>`;
     const armL = mood === 'glasses'
-      ? `<path d="M52 158 q-18 14 -10 34" stroke="#1FA89C" stroke-width="18" stroke-linecap="round" fill="none"/>`
-      : `<path d="M52 160 q-18 18 -8 36" stroke="#1FA89C" stroke-width="18" stroke-linecap="round" fill="none"/>`;
+      ? `<path d="M52 158 q-18 14 -10 34" stroke="${C.arm}" stroke-width="18" stroke-linecap="round" fill="none"/>`
+      : `<path d="M52 160 q-18 18 -8 36" stroke="${C.arm}" stroke-width="18" stroke-linecap="round" fill="none"/>`;
     const eyes = sleep
       ? `<path d="M80 132 q12 10 24 0 M122 132 q12 10 24 0" stroke="#2b2350" stroke-width="5" fill="none" stroke-linecap="round"/>`
       : `<ellipse cx="92" cy="128" rx="15" ry="17" fill="#fff"/><ellipse cx="136" cy="128" rx="15" ry="17" fill="#fff"/>
@@ -37,15 +39,15 @@ const ART = (() => {
     const zzz = sleep
       ? `<g fill="#8E6CEF" font-family="Fredoka" font-weight="700"><text x="168" y="70" font-size="30">z</text><text x="186" y="44" font-size="22">z</text><text x="200" y="24" font-size="16">z</text></g>` : '';
     return wrap(`
-      <ellipse cx="112" cy="250" rx="62" ry="8" fill="#5a3e1b" opacity=".12"/>
-      ${L(`<rect x="82" y="200" width="20" height="48" rx="10" fill="#1A9D92"/><rect x="122" y="200" width="20" height="48" rx="10" fill="#1A9D92"/>
-           <ellipse cx="90" cy="246" rx="16" ry="8" fill="#1A9D92"/><ellipse cx="134" cy="246" rx="16" ry="8" fill="#1A9D92"/>`)}
+      <ellipse cx="112" cy="250" rx="62" ry="8" fill="#5a3e1b" opacity=".12"/>${back}
+      ${L(`<rect x="82" y="200" width="20" height="48" rx="10" fill="${C.leg}"/><rect x="122" y="200" width="20" height="48" rx="10" fill="${C.leg}"/>
+           <ellipse cx="90" cy="246" rx="16" ry="8" fill="${C.leg}"/><ellipse cx="134" cy="246" rx="16" ry="8" fill="${C.leg}"/>`)}
       ${L(armL + armR)}
       ${L(`<path d="M112 52 q-4 -16 4 -26" stroke="#3E8E5A" stroke-width="5" fill="none" stroke-linecap="round"/>
            <path d="M114 38 q-30 -26 -50 -6 q22 18 50 6z" fill="#8FCF7A"/><path d="M116 34 q22 -30 50 -14 q-18 26 -50 14z" fill="#2E9C8A"/>`)}
-      ${L(`<circle cx="112" cy="140" r="76" fill="#3CC2B4"/>`)}
+      ${L(`<circle cx="112" cy="140" r="76" fill="${C.body}"/>`)}
       <ellipse cx="88" cy="104" rx="34" ry="22" fill="#fff" opacity=".18"/>
-      ${eyes}<circle cx="74" cy="156" r="10" fill="#FF8FA8" opacity=".75"/><circle cx="154" cy="156" r="10" fill="#FF8FA8" opacity=".75"/>${mouth}${glasses}${zzz}
+      ${eyes}<circle cx="74" cy="156" r="10" fill="#FF8FA8" opacity=".75"/><circle cx="154" cy="156" r="10" fill="#FF8FA8" opacity=".75"/>${mouth}${glasses}${zzz}${front}
     `, '0 0 230 260', 'popo-svg');
   }
 
@@ -453,10 +455,22 @@ const ART = (() => {
     del: `<path d="M9 5h11v14H9l-6-7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 9l5 6M17 9l-5 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>`,
     parent: `<circle cx="9" cy="8" r="3.4" fill="currentColor"/><circle cx="16.5" cy="9.5" r="2.6" fill="currentColor" opacity=".75"/><path d="M2.5 20c0-4 3-6.5 6.5-6.5s6.5 2.5 6.5 6.5z" fill="currentColor"/><path d="M14 20c0-3 1-5 2.5-5.6 2.6 0 5 2 5 5.6z" fill="currentColor" opacity=".75"/>`,
     album: `<rect x="4" y="3" width="15" height="18" rx="2.5" fill="#B79AF5"/><rect x="6.5" y="3" width="12.5" height="18" rx="2" fill="#8E6CEF"/><path d="M12.8 8.2l1.3 2.7 3 .4-2.2 2 .6 3-2.7-1.5-2.7 1.5.6-3-2.2-2 3-.4z" fill="#FFC93C"/><path d="M4 6h2M4 10h2M4 14h2M4 18h2" stroke="#6b4fc0" stroke-width="1.4" stroke-linecap="round"/>`,
+    pencil: `<path d="M4 20l1.2-4.6L15.8 4.8a2 2 0 0 1 2.8 0l.6.6a2 2 0 0 1 0 2.8L8.6 18.8z" fill="#FFC93C" stroke="#b5832a" stroke-width="1.2" stroke-linejoin="round"/><path d="M4 20l1.2-4.6 3.4 3.4z" fill="#f3d3a5"/><path d="M14.4 6.2l3.4 3.4" stroke="#b5832a" stroke-width="1.2"/>`,
+    crayon: `<path d="M5 19l2-6 8-8 4 4-8 8z" fill="#e5534b"/><path d="M5 19l2-6 4 4z" fill="#f7b0a8"/><path d="M9 11l4 4M11 9l4 4" stroke="#fff" stroke-width="1.2" opacity=".7"/>`,
+    spray: `<rect x="7" y="9" width="9" height="12" rx="2" fill="#4fa8e0"/><rect x="9" y="5.5" width="5" height="4" rx="1" fill="#2b5f8a"/><circle cx="4" cy="5" r="1" fill="#4fa8e0"/><circle cx="3" cy="8" r="1" fill="#4fa8e0"/><circle cx="5.5" cy="3" r="1" fill="#4fa8e0"/><circle cx="6" cy="7" r=".9" fill="#4fa8e0"/>`,
+    eraser: `<path d="M3.5 15.5l9-9a2 2 0 0 1 2.8 0l3.2 3.2a2 2 0 0 1 0 2.8L12 19H7z" fill="#f49ab0"/><path d="M3.5 15.5L7 19h5l-4.3-4.3z" fill="#fff" stroke="#f49ab0" stroke-width="1"/><path d="M12 19h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>`,
+    bucket: `<path d="M5 9l7-6 7 7-7 7z" fill="#8E6CEF"/><path d="M5 9l14 1" stroke="#5b3fb8" stroke-width="1.4"/><path d="M19.5 13c1 1.8 1.6 3 1.6 3.8a1.6 1.6 0 0 1-3.2 0c0-.8.6-2 1.6-3.8z" fill="#8E6CEF"/>`,
+    stamp: `<path d="M12 2.8l2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8L3.6 8.9l5.8-.8z" fill="#FFC93C" stroke="#e0a21a" stroke-width="1.2" stroke-linejoin="round"/>`,
+    undo: `<path d="M9 7H15a5 5 0 0 1 0 10H8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M10 3L5.5 7.2 10 11.4" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>`,
+    newpage: `<path d="M6 3h8l5 5v13H6z" fill="#fff" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 3v5h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12.5 11v7M9 14.5h7" stroke="#1FB5A8" stroke-width="2.4" stroke-linecap="round"/>`,
+    palette: `<path d="M12 3a9 9 0 1 0 0 18c1.4 0 2-1 1.6-2.2-.5-1.4.3-2.8 1.8-2.8H18a3 3 0 0 0 3-3c0-5.5-4-10-9-10z" fill="#FFF1D6" stroke="#b58a5a" stroke-width="1.2"/><circle cx="7.5" cy="11" r="1.7" fill="#e5534b"/><circle cx="10" cy="7" r="1.7" fill="#FFC93C"/><circle cx="14.5" cy="7" r="1.7" fill="#1FB5A8"/><circle cx="17.3" cy="10.5" r="1.7" fill="#8E6CEF"/>`,
+    hanger: `<path d="M12 7.5a2 2 0 1 1 2-2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 7.5v1.5L2.8 15.6c-.9.7-.4 2 .7 2h17c1.1 0 1.6-1.3.7-2L12 9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>`,
+    gift: `<rect x="4" y="10" width="16" height="10" rx="1.5" fill="#f49ab0"/><rect x="3" y="7" width="18" height="4" rx="1.2" fill="#e5534b"/><path d="M12 7v13" stroke="#FFC93C" stroke-width="2.4"/><path d="M12 7c-2-4-6-3-5-1s5 1 5 1c2-4 6-3 5-1s-5 1-5 1" fill="none" stroke="#FFC93C" stroke-width="1.8"/>`,
   };
   const icon = (n, cls = '') => `<svg class="ico ${cls}" viewBox="0 0 24 24" aria-hidden="true">${I[n]}</svg>`;
 
   const draw = (name, arg, cls = '') => wrap(D[name](arg), '0 0 200 200', cls);
 
-  return { popo, avatar, draw, icon, D, wrap, L };
+  const api = { popo, avatar, draw, icon, D, wrap, L, outfit: null };
+  return api;
 })();

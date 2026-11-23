@@ -19,50 +19,6 @@
   "lang": "he",
   "text": "שלום מתן!"
  },
- "t_math": {
-  "lang": "he",
-  "text": "חשבון בבועות"
- },
- "t_word": {
-  "lang": "he",
-  "text": "המילה החסרה"
- },
- "t_zoo": {
-  "lang": "he",
-  "text": "אנגלית בגן החיות"
- },
- "t_clock": {
-  "lang": "he",
-  "text": "מה השעה?"
- },
- "t_letter": {
-  "lang": "he",
-  "text": "מצא את האות"
- },
- "t_count": {
-  "lang": "he",
-  "text": "בוא נספור"
- },
- "t_album": {
-  "lang": "he",
-  "text": "האלבום שלי"
- },
- "inst_math": {
-  "lang": "he",
-  "text": "כמה זה? בחרי את הבועה הנכונה"
- },
- "inst_word": {
-  "lang": "he",
-  "text": "איזו אות חסרה במילה?"
- },
- "inst_zoo": {
-  "lang": "he",
-  "text": "איזו חיה זו?"
- },
- "inst_clock": {
-  "lang": "he",
-  "text": "מה השעה בשעון?"
- },
  "try_m": {
   "lang": "he",
   "text": "כמעט! נסה שוב"
@@ -101,6 +57,20 @@
   "text": "קיבלת מדבקה חדשה!",
   "say": "קִיבַּלְתְּ מַדְבֵּקָה חֲדָשָׁה!"
  },
+ "gold_sticker": {
+  "lang": "he",
+  "text": "קיבלת מדבקת זהב!",
+  "say": "קִיבַּלְתָּ מַדְבֶּקֶת זָהָב!"
+ },
+ "gold_sticker_f": {
+  "lang": "he",
+  "text": "קיבלת מדבקת זהב!",
+  "say": "קִיבַּלְתְּ מַדְבֶּקֶת זָהָב!"
+ },
+ "champ_level": {
+  "lang": "he",
+  "text": "שלב אלוף! בהצלחה!"
+ },
  "rest": {
   "lang": "he",
   "text": "זמן לנוח! נתראה מחר"
@@ -108,6 +78,455 @@
  "parents": {
   "lang": "he",
   "text": "אזור הורים"
+ },
+ "t_album": {
+  "lang": "he",
+  "text": "האלבום שלי"
+ },
+ "t_daily": {
+  "lang": "he",
+  "text": "אתגר יומי! חמש שאלות מכל המשחקים"
+ },
+ "daily_done": {
+  "lang": "he",
+  "text": "כבר עשית את האתגר היום. נתראה מחר!",
+  "say": "כְּבָר עָשִׂיתָ אֶת הָאֶתְגָּר הַיּוֹם. נִתְרָאֶה מָחָר!"
+ },
+ "t_wardrobe": {
+  "lang": "he",
+  "text": "הארון של פופו"
+ },
+ "bought": {
+  "lang": "he",
+  "text": "איזה יופי! פופו מודה לך"
+ },
+ "need_stars": {
+  "lang": "he",
+  "text": "צריך עוד כוכבים. ממשיכים לשחק!"
+ },
+ "t_math": {
+  "lang": "he",
+  "text": "חשבון בבועות"
+ },
+ "t_word": {
+  "lang": "he",
+  "text": "המילה החסרה"
+ },
+ "t_zoo": {
+  "lang": "he",
+  "text": "אנגלית בגן החיות"
+ },
+ "t_clock": {
+  "lang": "he",
+  "text": "מה השעה?"
+ },
+ "t_letter": {
+  "lang": "he",
+  "text": "מצא את האות"
+ },
+ "t_count": {
+  "lang": "he",
+  "text": "בוא נספור"
+ },
+ "t_memory": {
+  "lang": "he",
+  "text": "זיכרון"
+ },
+ "t_search": {
+  "lang": "he",
+  "text": "חיפוש מילים"
+ },
+ "t_sentence": {
+  "lang": "he",
+  "text": "סדר את המשפט"
+ },
+ "t_shop": {
+  "lang": "he",
+  "text": "חנות ושקלים"
+ },
+ "t_pattern": {
+  "lang": "he",
+  "text": "המשך את הסדרה"
+ },
+ "t_colors": {
+  "lang": "he",
+  "text": "צבעים"
+ },
+ "t_shapes": {
+  "lang": "he",
+  "text": "צורות"
+ },
+ "t_shadow": {
+  "lang": "he",
+  "text": "צל של מי?"
+ },
+ "t_bigsmall": {
+  "lang": "he",
+  "text": "גדול וקטן"
+ },
+ "t_mmemory": {
+  "lang": "he",
+  "text": "זיכרון קטן"
+ },
+ "t_draw": {
+  "lang": "he",
+  "text": "הציור שלי"
+ },
+ "t_gallery": {
+  "lang": "he",
+  "text": "הגלריה שלי"
+ },
+ "inst_math": {
+  "lang": "he",
+  "text": "כמה זה? בחרי את הבועה הנכונה"
+ },
+ "inst_missing": {
+  "lang": "he",
+  "text": "איזה מספר חסר?"
+ },
+ "inst_cmp": {
+  "lang": "he",
+  "text": "איזה סימן מתאים? גדול, קטן או שווה?"
+ },
+ "inst_word": {
+  "lang": "he",
+  "text": "איזו אות חסרה במילה?"
+ },
+ "inst_spell": {
+  "lang": "he",
+  "text": "בני את המילה. לחצי על האותיות לפי הסדר",
+  "say": "בְּנִי אֶת הַמִּלָּה. לַחֲצִי עַל הָאוֹתִיּוֹת לְפִי הַסֵּדֶר"
+ },
+ "inst_zoo": {
+  "lang": "he",
+  "text": "מה זה באנגלית? בחרי את התמונה"
+ },
+ "inst_en_word": {
+  "lang": "he",
+  "text": "איך אומרים באנגלית?"
+ },
+ "inst_clock": {
+  "lang": "he",
+  "text": "מה השעה בשעון?"
+ },
+ "inst_setclock": {
+  "lang": "he",
+  "text": "כווני את המחוגים לשעה שכתובה, ואז לחצי בדיקה",
+  "say": "כַּוְּנִי אֶת הַמְּחוֹגִים לַשָּׁעָה שֶׁכְּתוּבָה, וְאָז לַחֲצִי בְּדִיקָה"
+ },
+ "inst_mem_f": {
+  "lang": "he",
+  "text": "מצאי את הזוגות"
+ },
+ "inst_mem_m": {
+  "lang": "he",
+  "text": "מצא שתי תמונות זהות",
+  "say": "מְצָא שְׁתֵּי תְּמוּנוֹת זֵהוֹת"
+ },
+ "inst_search": {
+  "lang": "he",
+  "text": "מצאי את המילים בלוח. גררי את האצבע על המילה"
+ },
+ "inst_sentence": {
+  "lang": "he",
+  "text": "סדרי את המילים למשפט"
+ },
+ "inst_pay": {
+  "lang": "he",
+  "text": "שלמי בדיוק את המחיר. לחצי על המטבעות"
+ },
+ "inst_change": {
+  "lang": "he",
+  "text": "כמה עודף מקבלים?"
+ },
+ "inst_pattern": {
+  "lang": "he",
+  "text": "מה ממשיך את הסדרה?"
+ },
+ "q_shadow": {
+  "lang": "he",
+  "text": "של מי הצל הזה?"
+ },
+ "q_big": {
+  "lang": "he",
+  "text": "איפה הגדול?"
+ },
+ "q_small": {
+  "lang": "he",
+  "text": "איפה הקטן?"
+ },
+ "q_more": {
+  "lang": "he",
+  "text": "איפה יש יותר?"
+ },
+ "q_less": {
+  "lang": "he",
+  "text": "איפה יש פחות?"
+ },
+ "color_red": {
+  "lang": "he",
+  "text": "אדום",
+  "say": "אָדֹם"
+ },
+ "q_color_red": {
+  "lang": "he",
+  "text": "איפה הצבע אדום?",
+  "say": "אֵיפֹה הַצֶּבַע אָדֹם?"
+ },
+ "color_blue": {
+  "lang": "he",
+  "text": "כחול",
+  "say": "כָּחֹל"
+ },
+ "q_color_blue": {
+  "lang": "he",
+  "text": "איפה הצבע כחול?",
+  "say": "אֵיפֹה הַצֶּבַע כָּחֹל?"
+ },
+ "color_green": {
+  "lang": "he",
+  "text": "ירוק",
+  "say": "יָרֹק"
+ },
+ "q_color_green": {
+  "lang": "he",
+  "text": "איפה הצבע ירוק?",
+  "say": "אֵיפֹה הַצֶּבַע יָרֹק?"
+ },
+ "color_yellow": {
+  "lang": "he",
+  "text": "צהוב",
+  "say": "צָהֹב"
+ },
+ "q_color_yellow": {
+  "lang": "he",
+  "text": "איפה הצבע צהוב?",
+  "say": "אֵיפֹה הַצֶּבַע צָהֹב?"
+ },
+ "color_orange": {
+  "lang": "he",
+  "text": "כתום",
+  "say": "כָּתֹם"
+ },
+ "q_color_orange": {
+  "lang": "he",
+  "text": "איפה הצבע כתום?",
+  "say": "אֵיפֹה הַצֶּבַע כָּתֹם?"
+ },
+ "color_purple": {
+  "lang": "he",
+  "text": "סגול",
+  "say": "סָגֹל"
+ },
+ "q_color_purple": {
+  "lang": "he",
+  "text": "איפה הצבע סגול?",
+  "say": "אֵיפֹה הַצֶּבַע סָגֹל?"
+ },
+ "color_pink": {
+  "lang": "he",
+  "text": "ורוד",
+  "say": "וָרֹד"
+ },
+ "q_color_pink": {
+  "lang": "he",
+  "text": "איפה הצבע ורוד?",
+  "say": "אֵיפֹה הַצֶּבַע וָרֹד?"
+ },
+ "color_brown": {
+  "lang": "he",
+  "text": "חום",
+  "say": "חוּם"
+ },
+ "q_color_brown": {
+  "lang": "he",
+  "text": "איפה הצבע חום?",
+  "say": "אֵיפֹה הַצֶּבַע חוּם?"
+ },
+ "color_black": {
+  "lang": "he",
+  "text": "שחור",
+  "say": "שָׁחֹר"
+ },
+ "q_color_black": {
+  "lang": "he",
+  "text": "איפה הצבע שחור?",
+  "say": "אֵיפֹה הַצֶּבַע שָׁחֹר?"
+ },
+ "color_white": {
+  "lang": "he",
+  "text": "לבן",
+  "say": "לָבָן"
+ },
+ "q_color_white": {
+  "lang": "he",
+  "text": "איפה הצבע לבן?",
+  "say": "אֵיפֹה הַצֶּבַע לָבָן?"
+ },
+ "color_lightblue": {
+  "lang": "he",
+  "text": "תכלת",
+  "say": "תְּכֵלֶת"
+ },
+ "color_lightgreen": {
+  "lang": "he",
+  "text": "ירוק בהיר",
+  "say": "יָרֹק בָּהִיר"
+ },
+ "color_gray": {
+  "lang": "he",
+  "text": "אפור",
+  "say": "אָפֹר"
+ },
+ "color_turquoise": {
+  "lang": "he",
+  "text": "טורקיז"
+ },
+ "color_darkblue": {
+  "lang": "he",
+  "text": "כחול כהה",
+  "say": "כָּחֹל כֵּהֶה"
+ },
+ "color_skin": {
+  "lang": "he",
+  "text": "בז׳",
+  "say": "בֶּז'"
+ },
+ "shape_circle": {
+  "lang": "he",
+  "text": "עיגול",
+  "say": "עִגּוּל"
+ },
+ "q_shape_circle": {
+  "lang": "he",
+  "text": "איפה העיגול?",
+  "say": "אֵיפֹה הַעִגּוּל?"
+ },
+ "shape_square": {
+  "lang": "he",
+  "text": "ריבוע",
+  "say": "רִבּוּעַ"
+ },
+ "q_shape_square": {
+  "lang": "he",
+  "text": "איפה הריבוע?",
+  "say": "אֵיפֹה הַרִבּוּעַ?"
+ },
+ "shape_triangle": {
+  "lang": "he",
+  "text": "משולש",
+  "say": "מְשֻׁלָּשׁ"
+ },
+ "q_shape_triangle": {
+  "lang": "he",
+  "text": "איפה המשולש?",
+  "say": "אֵיפֹה הַמְשֻׁלָּשׁ?"
+ },
+ "shape_star": {
+  "lang": "he",
+  "text": "כוכב",
+  "say": "כּוֹכָב"
+ },
+ "q_shape_star": {
+  "lang": "he",
+  "text": "איפה הכוכב?",
+  "say": "אֵיפֹה הַכּוֹכָב?"
+ },
+ "shape_heart": {
+  "lang": "he",
+  "text": "לב",
+  "say": "לֵב"
+ },
+ "q_shape_heart": {
+  "lang": "he",
+  "text": "איפה הלב?",
+  "say": "אֵיפֹה הַלֵב?"
+ },
+ "shape_rectangle": {
+  "lang": "he",
+  "text": "מלבן",
+  "say": "מַלְבֵּן"
+ },
+ "q_shape_rectangle": {
+  "lang": "he",
+  "text": "איפה המלבן?",
+  "say": "אֵיפֹה הַמַלְבֵּן?"
+ },
+ "shape_oval": {
+  "lang": "he",
+  "text": "אליפסה",
+  "say": "אֶלִיפְּסָה"
+ },
+ "q_shape_oval": {
+  "lang": "he",
+  "text": "איפה האליפסה?",
+  "say": "אֵיפֹה הַאֶלִיפְּסָה?"
+ },
+ "shape_diamond": {
+  "lang": "he",
+  "text": "מעוין",
+  "say": "מְעֻיָּן"
+ },
+ "q_shape_diamond": {
+  "lang": "he",
+  "text": "איפה המעוין?",
+  "say": "אֵיפֹה הַמְעֻיָּן?"
+ },
+ "d_marker": {
+  "lang": "he",
+  "text": "טוש"
+ },
+ "d_crayon": {
+  "lang": "he",
+  "text": "צבע שעווה"
+ },
+ "d_spray": {
+  "lang": "he",
+  "text": "ספריי"
+ },
+ "d_eraser": {
+  "lang": "he",
+  "text": "מחק"
+ },
+ "d_fill": {
+  "lang": "he",
+  "text": "דלי צבע"
+ },
+ "d_stamp": {
+  "lang": "he",
+  "text": "מדבקות"
+ },
+ "d_undo": {
+  "lang": "he",
+  "text": "ביטול"
+ },
+ "d_new": {
+  "lang": "he",
+  "text": "דף חדש"
+ },
+ "d_small": {
+  "lang": "he",
+  "text": "קטן"
+ },
+ "d_medium": {
+  "lang": "he",
+  "text": "בינוני"
+ },
+ "d_big": {
+  "lang": "he",
+  "text": "גדול"
+ },
+ "d_pages": {
+  "lang": "he",
+  "text": "דפי צביעה"
+ },
+ "d_free": {
+  "lang": "he",
+  "text": "ציור חופשי"
+ },
+ "d_saved": {
+  "lang": "he",
+  "text": "הציור נשמר בגלריה"
  },
  "word_dog": {
   "lang": "he",
@@ -121,25 +540,101 @@
   "lang": "he",
   "text": "דג"
  },
- "word_house": {
+ "word_horse": {
   "lang": "he",
-  "text": "בית"
+  "text": "סוס"
  },
- "word_tree": {
+ "word_cow": {
   "lang": "he",
-  "text": "עץ"
+  "text": "פרה",
+  "say": "פָּרָה"
  },
- "word_sun": {
+ "word_bird": {
   "lang": "he",
-  "text": "שמש"
+  "text": "ציפור"
  },
- "word_moon": {
+ "word_duck": {
   "lang": "he",
-  "text": "ירח"
+  "text": "ברווז"
  },
- "word_ball": {
+ "word_monkey": {
   "lang": "he",
-  "text": "כדור"
+  "text": "קוף"
+ },
+ "word_elephant": {
+  "lang": "he",
+  "text": "פיל"
+ },
+ "word_frog": {
+  "lang": "he",
+  "text": "צפרדע"
+ },
+ "word_rabbit": {
+  "lang": "he",
+  "text": "ארנב"
+ },
+ "word_lion": {
+  "lang": "he",
+  "text": "אריה"
+ },
+ "word_bear": {
+  "lang": "he",
+  "text": "דוב",
+  "say": "דֹּב"
+ },
+ "word_snake": {
+  "lang": "he",
+  "text": "נחש"
+ },
+ "word_sheep": {
+  "lang": "he",
+  "text": "כבשה",
+  "say": "כִּבְשָׂה"
+ },
+ "word_chicken": {
+  "lang": "he",
+  "text": "תרנגולת"
+ },
+ "word_zebra": {
+  "lang": "he",
+  "text": "זברה"
+ },
+ "word_turtle": {
+  "lang": "he",
+  "text": "צב",
+  "say": "צָב"
+ },
+ "word_butterfly": {
+  "lang": "he",
+  "text": "פרפר"
+ },
+ "word_bee": {
+  "lang": "he",
+  "text": "דבורה"
+ },
+ "word_mouse": {
+  "lang": "he",
+  "text": "עכבר",
+  "say": "עַכְבָּר"
+ },
+ "word_pig": {
+  "lang": "he",
+  "text": "חזיר",
+  "say": "חֲזִיר"
+ },
+ "word_owl": {
+  "lang": "he",
+  "text": "ינשוף"
+ },
+ "word_snail": {
+  "lang": "he",
+  "text": "חילזון",
+  "say": "חִלָּזוֹן"
+ },
+ "word_crab": {
+  "lang": "he",
+  "text": "סרטן",
+  "say": "סַרְטָן"
  },
  "word_apple": {
   "lang": "he",
@@ -149,9 +644,90 @@
   "lang": "he",
   "text": "בננה"
  },
- "word_flower": {
+ "word_cake": {
   "lang": "he",
-  "text": "פרח"
+  "text": "עוגה"
+ },
+ "word_strawberry": {
+  "lang": "he",
+  "text": "תות",
+  "say": "תּוּת"
+ },
+ "word_grapes": {
+  "lang": "he",
+  "text": "ענבים"
+ },
+ "word_orange": {
+  "lang": "he",
+  "text": "תפוז"
+ },
+ "word_pear": {
+  "lang": "he",
+  "text": "אגס"
+ },
+ "word_watermelon": {
+  "lang": "he",
+  "text": "אבטיח"
+ },
+ "word_bread": {
+  "lang": "he",
+  "text": "לחם",
+  "say": "לֶחֶם"
+ },
+ "word_egg": {
+  "lang": "he",
+  "text": "ביצה"
+ },
+ "word_milk": {
+  "lang": "he",
+  "text": "חלב",
+  "say": "חָלָב"
+ },
+ "word_cheese": {
+  "lang": "he",
+  "text": "גבינה"
+ },
+ "word_carrot": {
+  "lang": "he",
+  "text": "גזר",
+  "say": "גֶּזֶר"
+ },
+ "word_tomato": {
+  "lang": "he",
+  "text": "עגבנייה"
+ },
+ "word_cucumber": {
+  "lang": "he",
+  "text": "מלפפון"
+ },
+ "word_corn": {
+  "lang": "he",
+  "text": "תירס"
+ },
+ "word_icecream": {
+  "lang": "he",
+  "text": "גלידה"
+ },
+ "word_pizza": {
+  "lang": "he",
+  "text": "פיצה"
+ },
+ "word_lemon": {
+  "lang": "he",
+  "text": "לימון"
+ },
+ "word_candy": {
+  "lang": "he",
+  "text": "סוכרייה",
+  "say": "סֻכָּרִיָּה"
+ },
+ "word_house": {
+  "lang": "he",
+  "text": "בית"
+ },
+ "word_ball": {
+  "lang": "he",
+  "text": "כדור"
  },
  "word_book": {
   "lang": "he",
@@ -171,31 +747,6 @@
   "lang": "he",
   "text": "כובע"
  },
- "word_car": {
-  "lang": "he",
-  "text": "מכונית"
- },
- "word_bus": {
-  "lang": "he",
-  "text": "אוטובוס"
- },
- "word_horse": {
-  "lang": "he",
-  "text": "סוס"
- },
- "word_cow": {
-  "lang": "he",
-  "text": "פרה",
-  "say": "פָּרָה"
- },
- "word_bird": {
-  "lang": "he",
-  "text": "ציפור"
- },
- "word_cloud": {
-  "lang": "he",
-  "text": "ענן"
- },
  "word_chair": {
   "lang": "he",
   "text": "כיסא"
@@ -204,9 +755,258 @@
   "lang": "he",
   "text": "שעון"
  },
- "word_cake": {
+ "word_balloon": {
   "lang": "he",
-  "text": "עוגה"
+  "text": "בלון"
+ },
+ "word_key": {
+  "lang": "he",
+  "text": "מפתח",
+  "say": "מַפְתֵּחַ"
+ },
+ "word_door": {
+  "lang": "he",
+  "text": "דלת",
+  "say": "דֶּלֶת"
+ },
+ "word_bed": {
+  "lang": "he",
+  "text": "מיטה",
+  "say": "מִטָּה"
+ },
+ "word_table": {
+  "lang": "he",
+  "text": "שולחן"
+ },
+ "word_lamp": {
+  "lang": "he",
+  "text": "מנורה",
+  "say": "מְנוֹרָה"
+ },
+ "word_spoon": {
+  "lang": "he",
+  "text": "כף",
+  "say": "כַּף"
+ },
+ "word_fork": {
+  "lang": "he",
+  "text": "מזלג",
+  "say": "מַזְלֵג"
+ },
+ "word_umbrella": {
+  "lang": "he",
+  "text": "מטרייה"
+ },
+ "word_pencil": {
+  "lang": "he",
+  "text": "עיפרון",
+  "say": "עִפָּרוֹן"
+ },
+ "word_bag": {
+  "lang": "he",
+  "text": "תיק",
+  "say": "תִּיק"
+ },
+ "word_glasses": {
+  "lang": "he",
+  "text": "משקפיים"
+ },
+ "word_shirt": {
+  "lang": "he",
+  "text": "חולצה"
+ },
+ "word_sock": {
+  "lang": "he",
+  "text": "גרב",
+  "say": "גֶּרֶב"
+ },
+ "word_phone": {
+  "lang": "he",
+  "text": "טלפון"
+ },
+ "word_gift": {
+  "lang": "he",
+  "text": "מתנה"
+ },
+ "word_drum": {
+  "lang": "he",
+  "text": "תוף",
+  "say": "תֹּף"
+ },
+ "word_kite": {
+  "lang": "he",
+  "text": "עפיפון"
+ },
+ "word_tree": {
+  "lang": "he",
+  "text": "עץ"
+ },
+ "word_sun": {
+  "lang": "he",
+  "text": "שמש"
+ },
+ "word_moon": {
+  "lang": "he",
+  "text": "ירח"
+ },
+ "word_flower": {
+  "lang": "he",
+  "text": "פרח"
+ },
+ "word_cloud": {
+  "lang": "he",
+  "text": "ענן"
+ },
+ "word_star": {
+  "lang": "he",
+  "text": "כוכב"
+ },
+ "word_leaf": {
+  "lang": "he",
+  "text": "עלה",
+  "say": "עָלֶה"
+ },
+ "word_mountain": {
+  "lang": "he",
+  "text": "הר",
+  "say": "הַר"
+ },
+ "word_sea": {
+  "lang": "he",
+  "text": "ים",
+  "say": "יָם"
+ },
+ "word_rainbow": {
+  "lang": "he",
+  "text": "קשת",
+  "say": "קֶשֶׁת"
+ },
+ "word_fire": {
+  "lang": "he",
+  "text": "אש",
+  "say": "אֵשׁ"
+ },
+ "word_hand": {
+  "lang": "he",
+  "text": "יד",
+  "say": "יָד"
+ },
+ "word_foot": {
+  "lang": "he",
+  "text": "רגל",
+  "say": "רֶגֶל"
+ },
+ "word_eye": {
+  "lang": "he",
+  "text": "עין",
+  "say": "עַיִן"
+ },
+ "word_ear": {
+  "lang": "he",
+  "text": "אוזן",
+  "say": "אֹזֶן"
+ },
+ "word_nose": {
+  "lang": "he",
+  "text": "אף",
+  "say": "אַף"
+ },
+ "word_mouth": {
+  "lang": "he",
+  "text": "פה",
+  "say": "פֶּה"
+ },
+ "word_tooth": {
+  "lang": "he",
+  "text": "שן",
+  "say": "שֵׁן"
+ },
+ "word_hair": {
+  "lang": "he",
+  "text": "שיער",
+  "say": "שֵׂעָר"
+ },
+ "word_mom": {
+  "lang": "he",
+  "text": "אמא"
+ },
+ "word_dad": {
+  "lang": "he",
+  "text": "אבא"
+ },
+ "word_baby": {
+  "lang": "he",
+  "text": "תינוק"
+ },
+ "word_grandma": {
+  "lang": "he",
+  "text": "סבתא",
+  "say": "סַבְתָּא"
+ },
+ "word_grandpa": {
+  "lang": "he",
+  "text": "סבא",
+  "say": "סַבָּא"
+ },
+ "word_brother": {
+  "lang": "he",
+  "text": "אח",
+  "say": "אָח"
+ },
+ "word_sister": {
+  "lang": "he",
+  "text": "אחות",
+  "say": "אָחוֹת"
+ },
+ "word_car": {
+  "lang": "he",
+  "text": "מכונית"
+ },
+ "word_bus": {
+  "lang": "he",
+  "text": "אוטובוס"
+ },
+ "word_train": {
+  "lang": "he",
+  "text": "רכבת"
+ },
+ "word_airplane": {
+  "lang": "he",
+  "text": "מטוס"
+ },
+ "word_boat": {
+  "lang": "he",
+  "text": "סירה"
+ },
+ "word_bicycle": {
+  "lang": "he",
+  "text": "אופניים"
+ },
+ "word_rocket": {
+  "lang": "he",
+  "text": "טיל",
+  "say": "טִיל"
+ },
+ "word_truck": {
+  "lang": "he",
+  "text": "משאית"
+ },
+ "word_helicopter": {
+  "lang": "he",
+  "text": "מסוק"
+ },
+ "word_ship": {
+  "lang": "he",
+  "text": "אונייה",
+  "say": "אֳנִיָּה"
+ },
+ "word_tractor": {
+  "lang": "he",
+  "text": "טרקטור"
+ },
+ "word_firetruck": {
+  "lang": "he",
+  "text": "כבאית"
  },
  "en_lion": {
   "lang": "en",
@@ -255,6 +1055,230 @@
  "en_rabbit": {
   "lang": "en",
   "text": "rabbit"
+ },
+ "en_bear": {
+  "lang": "en",
+  "text": "bear"
+ },
+ "en_sheep": {
+  "lang": "en",
+  "text": "sheep"
+ },
+ "en_pig": {
+  "lang": "en",
+  "text": "pig"
+ },
+ "en_chicken": {
+  "lang": "en",
+  "text": "chicken"
+ },
+ "en_mouse": {
+  "lang": "en",
+  "text": "mouse"
+ },
+ "en_snake": {
+  "lang": "en",
+  "text": "snake"
+ },
+ "en_turtle": {
+  "lang": "en",
+  "text": "turtle"
+ },
+ "en_zebra": {
+  "lang": "en",
+  "text": "zebra"
+ },
+ "en_owl": {
+  "lang": "en",
+  "text": "owl"
+ },
+ "en_bee": {
+  "lang": "en",
+  "text": "bee"
+ },
+ "en_butterfly": {
+  "lang": "en",
+  "text": "butterfly"
+ },
+ "en_apple": {
+  "lang": "en",
+  "text": "apple"
+ },
+ "en_banana": {
+  "lang": "en",
+  "text": "banana"
+ },
+ "en_bread": {
+  "lang": "en",
+  "text": "bread"
+ },
+ "en_egg": {
+  "lang": "en",
+  "text": "egg"
+ },
+ "en_milk": {
+  "lang": "en",
+  "text": "milk"
+ },
+ "en_cheese": {
+  "lang": "en",
+  "text": "cheese"
+ },
+ "en_carrot": {
+  "lang": "en",
+  "text": "carrot"
+ },
+ "en_pizza": {
+  "lang": "en",
+  "text": "pizza"
+ },
+ "en_cake": {
+  "lang": "en",
+  "text": "cake"
+ },
+ "en_hand": {
+  "lang": "en",
+  "text": "hand"
+ },
+ "en_foot": {
+  "lang": "en",
+  "text": "foot"
+ },
+ "en_eye": {
+  "lang": "en",
+  "text": "eye"
+ },
+ "en_ear": {
+  "lang": "en",
+  "text": "ear"
+ },
+ "en_nose": {
+  "lang": "en",
+  "text": "nose"
+ },
+ "en_mouth": {
+  "lang": "en",
+  "text": "mouth"
+ },
+ "en_hair": {
+  "lang": "en",
+  "text": "hair"
+ },
+ "en_tooth": {
+  "lang": "en",
+  "text": "tooth"
+ },
+ "en_mom": {
+  "lang": "en",
+  "text": "mom"
+ },
+ "en_dad": {
+  "lang": "en",
+  "text": "dad"
+ },
+ "en_baby": {
+  "lang": "en",
+  "text": "baby"
+ },
+ "en_grandma": {
+  "lang": "en",
+  "text": "grandma"
+ },
+ "en_grandpa": {
+  "lang": "en",
+  "text": "grandpa"
+ },
+ "en_brother": {
+  "lang": "en",
+  "text": "brother"
+ },
+ "en_sister": {
+  "lang": "en",
+  "text": "sister"
+ },
+ "en_icecream": {
+  "lang": "en",
+  "text": "ice cream"
+ },
+ "en_c_red": {
+  "lang": "en",
+  "text": "red"
+ },
+ "en_c_blue": {
+  "lang": "en",
+  "text": "blue"
+ },
+ "en_c_green": {
+  "lang": "en",
+  "text": "green"
+ },
+ "en_c_yellow": {
+  "lang": "en",
+  "text": "yellow"
+ },
+ "en_c_orange": {
+  "lang": "en",
+  "text": "orange"
+ },
+ "en_c_purple": {
+  "lang": "en",
+  "text": "purple"
+ },
+ "en_c_pink": {
+  "lang": "en",
+  "text": "pink"
+ },
+ "en_c_brown": {
+  "lang": "en",
+  "text": "brown"
+ },
+ "en_c_black": {
+  "lang": "en",
+  "text": "black"
+ },
+ "en_c_white": {
+  "lang": "en",
+  "text": "white"
+ },
+ "en_n_1": {
+  "lang": "en",
+  "text": "one"
+ },
+ "en_n_2": {
+  "lang": "en",
+  "text": "two"
+ },
+ "en_n_3": {
+  "lang": "en",
+  "text": "three"
+ },
+ "en_n_4": {
+  "lang": "en",
+  "text": "four"
+ },
+ "en_n_5": {
+  "lang": "en",
+  "text": "five"
+ },
+ "en_n_6": {
+  "lang": "en",
+  "text": "six"
+ },
+ "en_n_7": {
+  "lang": "en",
+  "text": "seven"
+ },
+ "en_n_8": {
+  "lang": "en",
+  "text": "eight"
+ },
+ "en_n_9": {
+  "lang": "en",
+  "text": "nine"
+ },
+ "en_n_10": {
+  "lang": "en",
+  "text": "ten"
  },
  "num_1": {
   "lang": "he",
@@ -550,5 +1574,301 @@
   "lang": "he",
   "text": "כמה כוכבים יש?",
   "say": "כַּמָּה כּוֹכָבִים יֵשׁ?"
+ },
+ "story_a0": {
+  "lang": "he",
+  "text": "לנועה יש שני תפוחים. היא קטפה עוד אחד. כמה תפוחים יש עכשיו?"
+ },
+ "story_a1": {
+  "lang": "he",
+  "text": "לנועה יש שלושה בלונים. היא קיבלה עוד שניים. כמה בלונים יש עכשיו?"
+ },
+ "story_a2": {
+  "lang": "he",
+  "text": "לנועה יש ארבעה דגים. היא קנתה עוד אחד. כמה דגים יש עכשיו?"
+ },
+ "story_a3": {
+  "lang": "he",
+  "text": "לנועה יש שני כוכבים. היא ציירה עוד שלושה. כמה כוכבים יש עכשיו?"
+ },
+ "story_a4": {
+  "lang": "he",
+  "text": "לנועה יש חמישה פרחים. היא קטפה עוד שניים. כמה פרחים יש עכשיו?"
+ },
+ "story_a5": {
+  "lang": "he",
+  "text": "לדני יש שלוש מכוניות. הוא קיבל עוד שלוש. כמה מכוניות יש עכשיו?"
+ },
+ "story_a6": {
+  "lang": "he",
+  "text": "על העץ יושבות ארבע ציפורים. הגיעו עוד ארבע. כמה ציפורים על העץ עכשיו?"
+ },
+ "story_a7": {
+  "lang": "he",
+  "text": "לדני יש שש בננות. הוא קנה עוד שלוש. כמה בננות יש עכשיו?"
+ },
+ "story_a8": {
+  "lang": "he",
+  "text": "לנועה יש חמישה תפוחים. היא קטפה עוד חמישה. כמה תפוחים יש עכשיו?"
+ },
+ "story_a9": {
+  "lang": "he",
+  "text": "לנועה יש שבעה בלונים. היא קיבלה עוד שניים. כמה בלונים יש עכשיו?"
+ },
+ "story_a10": {
+  "lang": "he",
+  "text": "לנועה יש שני דגים. היא קנתה עוד ארבעה. כמה דגים יש עכשיו?"
+ },
+ "story_a11": {
+  "lang": "he",
+  "text": "לנועה יש שישה כוכבים. היא ציירה עוד אחד. כמה כוכבים יש עכשיו?"
+ },
+ "story_a12": {
+  "lang": "he",
+  "text": "לנועה יש שלושה פרחים. היא קטפה עוד ארבעה. כמה פרחים יש עכשיו?"
+ },
+ "story_a13": {
+  "lang": "he",
+  "text": "לדני יש שמונה מכוניות. הוא קיבל עוד שתיים. כמה מכוניות יש עכשיו?"
+ },
+ "story_a14": {
+  "lang": "he",
+  "text": "על העץ יושבות ארבע ציפורים. הגיעו עוד שתיים. כמה ציפורים על העץ עכשיו?"
+ },
+ "story_a15": {
+  "lang": "he",
+  "text": "לדני יש שתי בננות. הוא קנה עוד שתיים. כמה בננות יש עכשיו?"
+ },
+ "story_s0": {
+  "lang": "he",
+  "text": "לנועה היו שלושה כוכבים. היא מחקה אחד. כמה כוכבים נשארו?"
+ },
+ "story_s1": {
+  "lang": "he",
+  "text": "לנועה היו חמישה פרחים. היא נתנה לאמא שניים. כמה פרחים נשארו?"
+ },
+ "story_s2": {
+  "lang": "he",
+  "text": "לדני היו ארבע מכוניות. הוא נתן לחבר שלוש. כמה מכוניות נשארו?"
+ },
+ "story_s3": {
+  "lang": "he",
+  "text": "על העץ ישבו שש ציפורים. שתיים עפו משם. כמה ציפורים נשארו?"
+ },
+ "story_s4": {
+  "lang": "he",
+  "text": "לדני היו שבע בננות. הוא אכל שלוש. כמה בננות נשארו?"
+ },
+ "story_s5": {
+  "lang": "he",
+  "text": "לנועה היו שמונה תפוחים. היא אכלה חמישה. כמה תפוחים נשארו?"
+ },
+ "story_s6": {
+  "lang": "he",
+  "text": "לנועה היו חמישה בלונים. ארבעה עפו לשמיים. כמה בלונים נשארו?"
+ },
+ "story_s7": {
+  "lang": "he",
+  "text": "לנועה היו תשעה דגים. ארבעה שחו משם. כמה דגים נשארו?"
+ },
+ "story_s8": {
+  "lang": "he",
+  "text": "לנועה היו עשרה כוכבים. היא מחקה שלושה. כמה כוכבים נשארו?"
+ },
+ "story_s9": {
+  "lang": "he",
+  "text": "לנועה היו שישה פרחים. היא נתנה לאמא ארבעה. כמה פרחים נשארו?"
+ },
+ "story_s10": {
+  "lang": "he",
+  "text": "לדני היו שבע מכוניות. הוא נתן לחבר חמש. כמה מכוניות נשארו?"
+ },
+ "story_s11": {
+  "lang": "he",
+  "text": "על העץ ישבו ארבע ציפורים. שתיים עפו משם. כמה ציפורים נשארו?"
+ },
+ "sent_0": {
+  "lang": "he",
+  "text": "הכלב רץ מהר"
+ },
+ "sent_1": {
+  "lang": "he",
+  "text": "החתול שותה חלב"
+ },
+ "sent_2": {
+  "lang": "he",
+  "text": "הדג שוחה בים"
+ },
+ "sent_3": {
+  "lang": "he",
+  "text": "הציפור עפה גבוה"
+ },
+ "sent_4": {
+  "lang": "he",
+  "text": "השמש זורחת בבוקר"
+ },
+ "sent_5": {
+  "lang": "he",
+  "text": "אני אוכלת תפוח"
+ },
+ "sent_6": {
+  "lang": "he",
+  "text": "הפרה נותנת חלב"
+ },
+ "sent_7": {
+  "lang": "he",
+  "text": "הירח מאיר בלילה"
+ },
+ "sent_8": {
+  "lang": "he",
+  "text": "אבא קורא ספר"
+ },
+ "sent_9": {
+  "lang": "he",
+  "text": "הרכבת נוסעת מהר"
+ },
+ "sent_10": {
+  "lang": "he",
+  "text": "התינוק ישן במיטה"
+ },
+ "sent_11": {
+  "lang": "he",
+  "text": "הקוף אוכל בננה"
+ },
+ "sent_12": {
+  "lang": "he",
+  "text": "הילד בועט בכדור הגדול"
+ },
+ "sent_13": {
+  "lang": "he",
+  "text": "אמא אופה עוגה טעימה"
+ },
+ "sent_14": {
+  "lang": "he",
+  "text": "הצב הולך לאט מאוד"
+ },
+ "sent_15": {
+  "lang": "he",
+  "text": "הפרפר עף אל הפרח"
+ },
+ "sent_16": {
+  "lang": "he",
+  "text": "המטוס טס מעל העננים"
+ },
+ "sent_17": {
+  "lang": "he",
+  "text": "אני לובשת חולצה אדומה"
+ },
+ "sent_18": {
+  "lang": "he",
+  "text": "הארנב אוהב לאכול גזר"
+ },
+ "sent_19": {
+  "lang": "he",
+  "text": "הדבורה מכינה דבש מתוק"
+ },
+ "sent_20": {
+  "lang": "he",
+  "text": "סבתא שותה כוס תה"
+ },
+ "sent_21": {
+  "lang": "he",
+  "text": "הכבאית נוסעת אל האש"
+ },
+ "sent_22": {
+  "lang": "he",
+  "text": "יש קשת בשמיים היום"
+ },
+ "sent_23": {
+  "lang": "he",
+  "text": "התיק שלי כבד מאוד"
+ },
+ "sent_24": {
+  "lang": "he",
+  "text": "הכלב הקטן נובח על החתול"
+ },
+ "sent_25": {
+  "lang": "he",
+  "text": "אני אוהבת לאכול גלידת תות"
+ },
+ "sent_26": {
+  "lang": "he",
+  "text": "הילדים משחקים בכדור בגינה"
+ },
+ "sent_27": {
+  "lang": "he",
+  "text": "אבא נוהג במכונית הכחולה שלו"
+ },
+ "sent_28": {
+  "lang": "he",
+  "text": "בחורף אני פותחת מטרייה גדולה"
+ },
+ "sent_29": {
+  "lang": "he",
+  "text": "הינשוף יושב על ענף בלילה"
+ },
+ "sent_30": {
+  "lang": "he",
+  "text": "הסירה שטה לאט על המים"
+ },
+ "sent_31": {
+  "lang": "he",
+  "text": "אחי משחק עם העפיפון בחוף"
+ },
+ "sent_32": {
+  "lang": "he",
+  "text": "סבא מספר לי סיפור יפה"
+ },
+ "sent_33": {
+  "lang": "he",
+  "text": "הפיל שותה מים עם החדק"
+ },
+ "sent_34": {
+  "lang": "he",
+  "text": "הטרקטור עובד בשדה כל היום"
+ },
+ "sent_35": {
+  "lang": "he",
+  "text": "התרנגולת הטילה ביצה גדולה מאוד"
+ },
+ "sent_36": {
+  "lang": "he",
+  "text": "בבוקר אני מצחצחת שיניים עם מברשת"
+ },
+ "sent_37": {
+  "lang": "he",
+  "text": "בקיץ אנחנו נוסעים לים עם אמא"
+ },
+ "sent_38": {
+  "lang": "he",
+  "text": "החתול הלבן ישן על הכיסא הגדול"
+ },
+ "sent_39": {
+  "lang": "he",
+  "text": "האוטובוס לוקח את הילדים לבית הספר"
+ },
+ "sent_40": {
+  "lang": "he",
+  "text": "הטיל טס אל הירח ואל הכוכבים"
+ },
+ "sent_41": {
+  "lang": "he",
+  "text": "אני אוהבת לצייר פרחים בצבעים יפים"
+ },
+ "sent_42": {
+  "lang": "he",
+  "text": "הזברה והאריה גרים בגן החיות"
+ },
+ "sent_43": {
+  "lang": "he",
+  "text": "ביום ההולדת שלי קיבלתי מתנה גדולה"
+ },
+ "sent_44": {
+  "lang": "he",
+  "text": "הדוב הגדול אוהב לאכול דבש מתוק"
+ },
+ "sent_45": {
+  "lang": "he",
+  "text": "המסוק הירוק עף מעל הבתים בעיר"
  }
 }

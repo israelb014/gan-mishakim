@@ -1,16 +1,18 @@
 /* Screens, navigation, top bar, parents corner, time limits, full-screen. */
 'use strict';
 
+const APP_VERSION = '1.1.0';
+
 const KIDS = {
-  hodaya: { name: 'הודיה', gender: 'f', games: ['word', 'math', 'clock', 'zoo'] },
-  matan: { name: 'מתן', gender: 'm', games: ['count', 'letter'] },
+  hodaya: { name: 'הודיה', gender: 'f', games: ['word', 'math', 'clock', 'zoo', 'memory', 'search', 'sentence', 'shop', 'pattern'], perPage: 6 },
+  matan: { name: 'מתן', gender: 'm', games: ['count', 'letter', 'colors', 'shapes', 'shadow', 'bigsmall', 'mmemory'], perPage: 3 },
 };
 
 /* Desktop (Electron) build exposes window.ganDesktop from its preload script. */
 const DESKTOP = !!(window.ganDesktop && window.ganDesktop.isDesktop);
 
 const App = {
-  child: null, screen: null, round: null, prevScreen: null,
+  child: null, screen: null, round: null, prevScreen: null, mapPage: {}, albumPage: 0, pathGame: null,
   gender() { return this.child ? KIDS[this.child].gender : 'm'; },
 
   /* ---------- stage scaling ---------- */
@@ -21,20 +23,32 @@ const App = {
     st.style.top = `${(innerHeight - 1080 * s) / 2}px`;
   },
 
-  mount(view, name) {
+  /** Background: the cream default, or a level world (theme cycles every 6 worlds with a new hue). */
+  setWorld(w) {
+    const key = w ? `${w.i}:${w.variant}` : '';
+    const bg = $('#bg');
+    if (bg.dataset.world === key) return;
+    bg.dataset.world = key;
+    bg.innerHTML = w && ART.world ? ART.world(w.i) : BG_SVG;
+    bg.style.filter = w && w.variant ? `hue-rotate(${(w.variant * 47) % 360}deg) saturate(1.05)` : '';
+  },
+
+  mount(view, name, opts = {}) {
     Voice.stop();
+    if (this.screen === 'draw-ed' && name !== 'draw-ed') Draw.leave();
     if (name !== 'game') this.round = null;
     this.screen = name;
+    this.setWorld(opts.world || (name === 'game' && this.round && this.round.plan.kind === 'level' ? Levels.world(this.round.plan.level) : null));
     const scr = $('#screen'); scr.innerHTML = ''; scr.appendChild(view);
-    $('#popo').classList.toggle('away', name === 'rest');
+    $('#popo').classList.toggle('away', ['rest', 'path', 'draw-ed', 'draw-list', 'wardrobe'].includes(name));
     $('#popo').dataset.screen = name;
-    this.setPopo(name === 'parents' ? 'glasses' : name === 'game' || name === 'album' ? 'point' : 'happy');
+    this.setPopo(name === 'parents' ? 'glasses' : ['game', 'album', 'draw'].includes(name) ? 'point' : 'happy');
     this.topbar(name);
   },
 
-  setPopo(mood) {
-    const p = $('#popo .body');
-    if (p.dataset.mood !== mood) { p.innerHTML = ART.popo(mood); p.dataset.mood = mood; }
+  setPopo(mood, force) {
+    const p = $('#popo .body'), key = mood + JSON.stringify(ART.outfit || {});
+    if (force || p.dataset.mood !== key) { p.innerHTML = ART.popo(mood); p.dataset.mood = key; }
   },
   popoHop() { const p = $('#popo'); p.classList.remove('hop'); void p.offsetWidth; p.classList.add('hop'); },
   popoSay(id, text) {
@@ -52,13 +66,16 @@ const App = {
     let center = '';
     if (name === 'parents') center = `<div class="pill who">${ART.icon('parent')}<span>הורים</span></div>`;
     else if (!minimal) center = `<button class="pill who" data-act="switch">${ART.avatar(this.child)}<span>${KIDS[this.child].name}</span></button>`;
+    const back = name === 'game' && this.round && this.round.plan.kind === 'level' ? 'path'
+      : ['draw-ed', 'draw-list'].includes(name) ? 'drawhome' : null;
     tb.innerHTML = `
-      <div class="tb-right">${minimal && name !== 'parents' ? '' : `<button class="pill home" data-act="home">${ART.icon('house')}<span>בית</span></button>`}</div>
+      <div class="tb-right">${minimal && name !== 'parents' ? '' : `<button class="pill home" data-act="home">${ART.icon('house')}<span>בית</span></button>`}
+        ${back ? `<button class="pill back" data-act="${back}" aria-label="חזרה">${ART.icon('back')}</button>` : ''}</div>
       <div class="tb-center">${center}</div>
       <div class="tb-left">
         <button class="tb-btn lock-btn" data-act="lock" aria-label="הורים">${ART.icon('lock')}<svg class="hold" viewBox="0 0 84 84"><circle cx="42" cy="42" r="38"/></svg></button>
         ${DESKTOP ? '' : `<button class="tb-btn" data-act="fs" aria-label="מסך מלא">${ART.icon(fsIcon)}</button>`}
-        ${c && !minimal && name !== 'parents' ? `<div class="stars-count">${ART.icon('star')}<span>${c.stars}</span></div>` : ''}
+        ${c && !minimal && name !== 'parents' ? `<div class="stars-count">${ART.icon('star')}<span>${Store.wallet(this.child)}</span></div>` : ''}
       </div>`;
     this.bindLock($('.lock-btn', tb));
   },
@@ -76,7 +93,7 @@ const App = {
 
   /* ---------- screens ---------- */
   profiles() {
-    this.child = null; $('#stage').className = '';
+    this.child = null; $('#stage').className = ''; ART.outfit = null;
     const card = (id) => `<button class="profile ${id} tap" data-kid="${id}"><div class="av">${ART.avatar(id)}</div><div class="nm">${KIDS[id].name}</div></button>`;
     const v = h(`<div class="view"><h1 class="title">מי משחק היום?</h1><div class="profiles">${card('hodaya')}${card('matan')}</div></div>`);
     v.addEventListener('click', (e) => {
@@ -91,97 +108,161 @@ const App = {
   selectChild(id) {
     this.child = id;
     $('#stage').className = 'theme-' + id;
+    ART.outfit = Store.child(id).outfit;
     Sfx.enabled = Store.child(id).settings.sound;
     if (this.timeUp()) return this.rest();
     this.map();
   },
 
-  map() {
+  map(page) {
     const id = this.child, kid = KIDS[id];
     if (this.timeUp()) return this.rest();
-    let cards;
-    if (id === 'hodaya') {
-      cards = `<div class="grid4">${kid.games.map((g) => {
-        const s = Store.game(id, g);
-        return `<div class="card gcard tap" data-game="${g}"><div class="gart">${GAMES[g].art()}</div>
-          ${ringSVG(Math.min(1, s.won / 10), `<div class="mini">${starsHTML(s.best)}</div>`, 10)}
-          <div class="gname">${GAMES[g].title}</div>${starsHTML(s.best)}</div>`;
-      }).join('')}</div>`;
-    } else {
-      cards = `<div class="grid2">${kid.games.map((g) => {
-        const s = Store.game(id, g);
-        return `<div class="card mcard tap" data-game="${g}"><div class="gart">${GAMES[g].art()}</div>
-          <div class="gname">${GAMES[g].title}</div>
-          <div class="mrow">${ringSVG(Math.min(1, s.won / 10), starsHTML(s.best).replace('class="stars"', 'class="stars" style="transform:scale(.55)"'), 10)}
-            <button class="speak" data-say="${GAMES[g].titleId}">${ART.icon('speaker')}</button></div></div>`;
-      }).join('')}</div>`;
-    }
-    const v = h(`<div class="view"><h1 class="title">שלום ${kid.name}!</h1>${cards}
-      <button class="album-btn">${ART.icon('album')}<span>האלבום שלי</span></button></div>`);
+    const per = kid.perPage, pages = Math.ceil(kid.games.length / per);
+    page = clamp(page ?? this.mapPage[id] ?? 0, 0, pages - 1); this.mapPage[id] = page;
+    const games = kid.games.slice(page * per, page * per + per);
+    const c = Store.child(id), dailyDone = Levels.dailyDone(id);
+    const card = (g) => {
+      const gs = Store.game(id, g), lv = gs.level;
+      const done = lv - 1, inWorld = done % 10;
+      return id === 'hodaya'
+        ? `<div class="card gcard tap" data-game="${g}"><div class="gart">${GAMES[g].art()}</div>
+            ${ringSVG(inWorld / 10, `<div class="lvl-n"><small>שלב</small>${lv}</div>`, 10)}
+            <div class="gname">${GAMES[g].title}</div></div>`
+        : `<div class="card mcard tap" data-game="${g}"><div class="gart">${GAMES[g].art()}</div>
+            <div class="gname">${GAMES[g].title}</div>
+            <div class="mrow">${ringSVG(inWorld / 10, `<div class="lvl-n">${lv}</div>`, 10)}${spk(GAMES[g].titleId)}</div></div>`;
+    };
+    const v = h(`<div class="view map ${id}"><h1 class="title">שלום ${kid.name}!</h1>
+      <div class="card draw-card tap" data-go="draw" role="button"><div class="dc-art">${ART.icon('palette')}</div><div class="dc-name">הציור שלי</div>
+        ${id === 'matan' ? spk('t_draw') : ''}</div>
+      <div class="gpage ${id === 'hodaya' ? 'grid6' : 'grid3'}">${games.map(card).join('')}</div>
+      ${page > 0 ? `<button class="pg-arrow right" data-page="${page - 1}" aria-label="הקודם">${ART.icon('back')}</button>` : ''}
+      ${page < pages - 1 ? `<button class="pg-arrow left" data-page="${page + 1}" aria-label="הבא">${ART.icon('back')}</button>` : ''}
+      <div class="dots">${Array.from({ length: pages }, (_, k) => `<i class="${k === page ? 'on' : ''}"></i>`).join('')}</div>
+      <div class="map-bottom">
+        <button class="mb daily ${dailyDone ? 'done' : ''}" data-go="daily">${ART.icon(dailyDone ? 'check' : 'gift')}<span>אתגר יומי</span></button>
+        <button class="mb album" data-go="album">${ART.icon('album')}<span>האלבום שלי</span>${c.newSticker ? '<i class="new-dot"></i>' : ''}</button>
+        <button class="mb wardrobe" data-go="wardrobe">${ART.icon('hanger')}<span>הארון של פופו</span></button>
+      </div></div>`);
     v.addEventListener('click', (e) => {
       const sp = e.target.closest('[data-say]');
       if (sp) { e.stopPropagation(); Voice.say(sp.dataset.say, { btn: sp }); return; }
       const g = e.target.closest('[data-game]');
-      if (g) { Sfx.play('click'); Round.start(g.dataset.game); return; }
-      if (e.target.closest('.album-btn')) { Sfx.play('click'); this.album(); }
+      if (g) { Sfx.play('click'); Levels.path(g.dataset.game); return; }
+      const pg = e.target.closest('[data-page]');
+      if (pg) { Sfx.play('click'); this.map(+pg.dataset.page); return; }
+      const go = e.target.closest('[data-go]'); if (!go) return;
+      Sfx.play('click');
+      if (go.dataset.go === 'draw') Draw.home();
+      else if (go.dataset.go === 'album') this.album();
+      else if (go.dataset.go === 'wardrobe') this.wardrobe();
+      else if (go.dataset.go === 'daily') {
+        if (Levels.dailyDone(id)) { Voice.say('daily_done'); go.classList.remove('wrong'); void go.offsetWidth; go.classList.add('wrong'); return; }
+        Voice.say('t_daily');
+        setTimeout(() => this.screen === 'map' && Round.run(Levels.dailyPlan(id)), 1800);
+      }
     });
     this.mount(v, 'map');
     Voice.say('hello_' + id);
   },
 
-  showResult(gid, stars, sticker) {
+  showResult(r) {
+    const { stars } = r;
     const C = 2 * Math.PI * 200, arc = C * .75;
-    const v = h(`<div class="view result">
-      <h1 class="title">כל הכבוד!</h1>
+    const lvl = r.kind === 'level';
+    const v = h(`<div class="view result ${r.champ ? 'champ' : ''}">
+      <h1 class="title">${r.champ ? 'אלוף השלב!' : r.kind === 'daily' ? 'האתגר הושלם!' : 'כל הכבוד!'}</h1>
       <button class="mini-album">${ART.icon('album')}</button>
+      ${r.earned ? `<div class="earned">${ART.icon('star')}<span>+${r.earned}</span></div>` : ''}
       <div class="res-ring"><svg viewBox="-20 -20 480 480"><circle class="trk" cx="220" cy="220" r="200" stroke-dasharray="${arc} ${C}"/>
         <circle class="val" cx="220" cy="220" r="200" stroke-dasharray="${arc} ${C}" stroke-dashoffset="${arc}"/></svg>
         <div class="res-stars">${[0, 1, 2].map((i) => `<div class="s ${i === 1 ? 'mid' : ''}">${ART.draw('star')}</div>`).join('')}</div>
         <div class="res-popo">${ART.popo('happy')}</div></div>
-      <div class="res-btns"><button class="card tap again">${ART.icon('redo')}<span>עוד פעם</span></button>
-        <button class="card tap next">${ART.icon('next')}<span>למשחק הבא</span></button></div></div>`);
-    this.mount(v, 'result');
-    this.topbar('result');
+      <div class="res-btns">${lvl ? `<button class="card tap again">${ART.icon('redo')}<span>עוד פעם</span></button>
+        <button class="card tap next">${ART.icon('next')}<span>לשלב הבא</span></button>` : `<button class="card tap tomap">${ART.icon('house')}<span>למפה</span></button>`}</div></div>`);
+    this.mount(v, 'result', { world: lvl ? Levels.world(r.level) : null });
     const val = $('.res-ring .val', v);
     requestAnimationFrame(() => requestAnimationFrame(() => { val.style.strokeDashoffset = arc * (1 - stars / 3); }));
     const ss = $$('.res-stars .s', v);
     [0, 2, 1].forEach((idx, k) => setTimeout(() => {
-      // order left, right, middle (middle = biggest last)
       const on = (idx === 0 && stars >= 1) || (idx === 2 && stars >= 2) || (idx === 1 && stars >= 3);
       ss[idx].classList.add(on ? 'on' : 'dim'); if (on) { Sfx.play('star'); confetti(ss[idx], 14); }
     }, 500 + k * 420));
-    const ids = ['praise_0'];
-    if (sticker >= 0) {
-      ids.push(this.gender() === 'f' ? 'new_sticker_f' : 'new_sticker');
-      setTimeout(() => {
-        if (this.screen !== 'result') return;
-        const s = h(`<div class="fly-sticker" style="filter:url(#sticker)">${ART.draw(STICKERS[sticker])}</div>`);
-        $('#screen .view').appendChild(s); Sfx.play('sticker');
-        $('.mini-album', v).classList.add('got');
-        setTimeout(() => s.remove(), 2100);
-      }, 1900);
-    }
+    const f = this.gender() === 'f';
+    const ids = [r.champ ? (f ? 'champ_f' : 'champ_m') : 'praise_0'];
+    const fly = [];
+    if (r.sticker) { ids.push(f ? 'new_sticker_f' : 'new_sticker'); fly.push(r.sticker); }
+    if (r.special) { ids.push(f ? 'gold_sticker_f' : 'gold_sticker'); fly.push(r.special); }
+    fly.forEach((sid, k) => setTimeout(() => {
+      if (this.screen !== 'result') return;
+      const s = h(`<div class="fly-sticker ${k ? 'second' : ''}" style="filter:url(#sticker)">${stickerArt(sid)}</div>`);
+      $('#screen .view').appendChild(s); Sfx.play('sticker');
+      $('.mini-album', v).classList.add('got');
+      setTimeout(() => s.remove(), 2100);
+    }, 1900 + k * 1500));
     setTimeout(() => this.screen === 'result' && Voice.say(ids), 600);
     v.addEventListener('click', (e) => {
-      if (e.target.closest('.again')) { Sfx.play('click'); Round.start(gid); }
-      else if (e.target.closest('.next')) { const gs = KIDS[this.child].games; Sfx.play('click'); Round.start(gs[(gs.indexOf(gid) + 1) % gs.length]); }
+      if (e.target.closest('.again')) { Sfx.play('click'); Round.start(r.gid, r.level); }
+      else if (e.target.closest('.next')) { Sfx.play('click'); Levels.path(r.gid); }
+      else if (e.target.closest('.tomap')) { Sfx.play('click'); this.map(); }
       else if (e.target.closest('.mini-album')) { Sfx.play('click'); this.album(); }
     });
     this.popoHop();
   },
 
-  album() {
+  album(page) {
     const c = Store.child(this.child), isNew = c.newSticker;
+    const lastNew = isNew ? c.stickers[c.stickers.length - 1] : null;
+    if (page == null) page = lastNew ? STICKER_PAGES.findIndex((p) => p.items.includes(lastNew)) : this.albumPage || 0;
+    this.albumPage = page;
     c.newSticker = false; Store.save();
+    const P = STICKER_PAGES[page];
     const rots = [-6, 4, -3, 7, -5, 3];
-    const slots = STICKERS.map((s, i) => i < c.stickers
-      ? `<div class="slot ${isNew && i === c.stickers - 1 ? 'new' : ''}"><div class="stk" style="--rot:${rots[i % 6]}deg">${ART.draw(s)}</div></div>`
-      : `<div class="slot"><div class="ghost">${ART.draw(s)}</div></div>`).join('');
-    const v = h(`<div class="view"><div class="book"><div class="spiral">${'<i></i>'.repeat(16)}</div>
-      <h2>האלבום שלי</h2><div class="album-count">${ART.icon('album')}<span>${c.stickers}/${STICKERS.length}</span></div>
-      <div class="slots">${slots}</div></div></div>`);
+    const slots = P.items.map((s, i) => c.stickers.includes(s)
+      ? `<div class="slot ${s === lastNew ? 'new' : ''}"><div class="stk" style="--rot:${rots[i % 6]}deg">${stickerArt(s)}</div></div>`
+      : `<div class="slot"><div class="ghost">${ART.draw(s.replace(/^gold_/, ''))}</div></div>`).join('');
+    const total = c.stickers.length;
+    const v = h(`<div class="view"><div class="book ${P.gold ? 'gold' : ''}"><div class="spiral">${'<i></i>'.repeat(16)}</div>
+      <h2>${P.name}</h2><div class="album-count">${ART.icon('album')}<span>${total}/${STICKERS.length}</span></div>
+      <div class="slots s20">${slots}</div>
+      <div class="album-tabs">${STICKER_PAGES.map((p, k) => `<button class="${k === page ? 'on' : ''} ${p.gold ? 'gold' : ''}" data-page="${k}">${p.items.filter((s) => c.stickers.includes(s)).length}</button>`).join('')}</div></div>
+      ${page > 0 ? `<button class="pg-arrow right" data-page="${page - 1}">${ART.icon('back')}</button>` : ''}
+      ${page < STICKER_PAGES.length - 1 ? `<button class="pg-arrow left" data-page="${page + 1}">${ART.icon('back')}</button>` : ''}</div>`);
+    v.addEventListener('click', (e) => { const b = e.target.closest('[data-page]'); if (b) { Sfx.play('click'); this.album(+b.dataset.page); } });
     this.mount(v, 'album');
     Voice.say('t_album');
+  },
+
+  /* ---------- Popo's wardrobe: buy items with stars, dress Popo ---------- */
+  wardrobe(kind = 'hat') {
+    const c = Store.child(this.child), items = (ART.WARDROBE || []).filter((w) => w.kind === kind);
+    const KINDS = [['hat', 'כובעים'], ['glasses', 'משקפיים'], ['cape', 'גלימות'], ['color', 'צבעים']];
+    const v = h(`<div class="view wardrobe-view">
+      <div class="wr-popo card"><div class="wr-figure">${ART.popo('happy')}</div><div class="wallet-pill">${ART.icon('star')}<span>${Store.wallet(this.child)}</span></div></div>
+      <div class="wr-shop"><div class="wr-tabs">${KINDS.map(([k, l]) => `<button class="${k === kind ? 'on' : ''}" data-kind="${k}">${l}</button>`).join('')}</div>
+        <div class="wr-grid">${items.map((w) => {
+          const own = c.owned.includes(w.id), worn = c.outfit[w.kind] === w.id;
+          return `<button class="card wr-item ${own ? 'own' : ''} ${worn ? 'worn' : ''}" data-item="${w.id}">${ART.wearIcon(w.id)}<span class="nm">${w.name}</span>
+            ${own ? (worn ? `<span class="tag on">${ART.icon('check')}</span>` : '') : `<span class="price">${ART.icon('star')}${w.price}</span>`}</button>`;
+        }).join('')}</div></div></div>`);
+    v.addEventListener('click', (e) => {
+      const k = e.target.closest('[data-kind]');
+      if (k) { Sfx.play('click'); return this.wardrobe(k.dataset.kind); }
+      const it = e.target.closest('[data-item]'); if (!it) return;
+      const w = ART.WARDROBE.find((x) => x.id === it.dataset.item);
+      if (!c.owned.includes(w.id)) {
+        if (Store.wallet(this.child) < w.price) { Sfx.play('wrong'); it.classList.remove('wrong'); void it.offsetWidth; it.classList.add('wrong'); Voice.say('need_stars'); return; }
+        c.spent += w.price; c.owned.push(w.id); c.outfit[w.kind] = w.id;
+        Sfx.play('sticker'); confetti(it, 20); Voice.say('bought');
+      } else {
+        c.outfit[w.kind] = c.outfit[w.kind] === w.id ? null : w.id; Sfx.play('click');
+      }
+      Store.save(); ART.outfit = c.outfit; this.setPopo('happy', true);
+      this.wardrobe(kind);
+    });
+    this.mount(v, 'wardrobe');
+    if (!this._wrSaid) { Voice.say('t_wardrobe'); }
+    this._wrSaid = true; setTimeout(() => { this._wrSaid = false; }, 4000);
   },
 
   rest() {
@@ -219,27 +300,30 @@ const App = {
 
   parents() {
     if (this.screen !== 'parents') this.prevScreen = this.screen;
-    const DIFF = [['easy', 'קל'], ['medium', 'בינוני'], ['hard', 'קשה']];
-    const LIM = [[0, 'ללא הגבלה'], [15, '15'], [30, '30'], [45, '45']];
+    const DIFF = [['auto', 'אוטומטי'], ['easy', 'קל'], ['medium', 'בינוני'], ['hard', 'קשה']];
+    const LIM = [[0, 'ללא'], [15, '15'], [30, '30'], [45, '45']];
     const col = (id) => {
       const c = Store.child(id), s = c.settings, mins = Math.floor(c.time.secs / 60);
       const locked = s.limit > 0 && c.time.secs >= s.limit * 60 && !c.time.unlocked;
       return `<div class="card pcol" data-kid="${id}">
-        <div class="ph">${ART.avatar(id)}<span>${KIDS[id].name}</span><small>היום: ${mins} דקות</small></div>
-        <div class="prow"><label>רמת קושי</label><div class="seg" data-set="difficulty">${DIFF.map(([v, l]) => `<button data-v="${v}" class="${s.difficulty === v ? 'on' : ''}">${l}</button>`).join('')}</div></div>
-        <div class="prow"><label>זמן משחק ביום</label><div class="seg" data-set="limit">${LIM.map(([v, l]) => `<button data-v="${v}" class="${s.limit === v ? 'on' : ''}">${l}</button>`).join('')}</div></div>
+        <div class="ph">${ART.avatar(id)}<span>${KIDS[id].name}</span><small>היום: ${mins} דקות · ${ART.icon('star')}${c.stars}</small></div>
+        <div class="prow"><label>רמת התחלה</label><div class="seg" data-set="difficulty">${DIFF.map(([v, l]) => `<button data-v="${v}" class="${s.difficulty === v ? 'on' : ''}">${l}</button>`).join('')}</div></div>
+        <div class="prow"><label>דקות ביום</label><div class="seg" data-set="limit">${LIM.map(([v, l]) => `<button data-v="${v}" class="${s.limit === v ? 'on' : ''}">${l}</button>`).join('')}</div></div>
         <div class="prow"><label>צלילים</label><div><button class="toggle ${s.sound ? 'on' : ''}" data-set="sound" aria-label="צלילים"></button></div></div>
-        <div class="prow"><label>התקדמות</label><div class="prings">${KIDS[id].games.map((g) => {
+        <div class="prow"><label>שלבים</label><div class="plevels">${KIDS[id].games.map((g) => {
           const gs = Store.game(id, g);
-          return `<div class="pring">${ringSVG(Math.min(1, gs.won / 10), `${gs.best}${ART.icon('star').replace('class="ico ', 'style="width:20px;height:20px" class="ico ')}`, 12)}<span>${GAMES[g].title}</span></div>`;
+          return `<div class="plv"><b>${gs.level - 1}</b><span>${GAMES[g].title}</span></div>`;
         }).join('')}</div></div>
-        <div class="prow"><label>איפוס התקדמות</label><div><button class="pbtn" data-act="reset">איפוס</button>
+        <div class="prow"><label>איפוס</label><div><button class="pbtn" data-act="reset">איפוס התקדמות</button>
           ${locked ? `<button class="pbtn ok" data-act="unlock">שחרור זמן להיום</button>` : ''}</div></div>
       </div>`;
     };
+    const ver = DESKTOP && window.ganDesktop.version && window.ganDesktop.version !== APP_VERSION
+      ? `גרסה ${APP_VERSION} · תוכנה ${window.ganDesktop.version}` : `גרסה ${APP_VERSION}`;
     const v = h(`<div class="view"><h1 class="title parents-title">אזור הורים</h1>
       ${DESKTOP ? `<button class="pbtn quit-btn" data-quit>יציאה</button>` : ''}
-      <div class="pcols">${col('hodaya')}${col('matan')}</div></div>`);
+      <div class="pcols">${col('hodaya')}${col('matan')}</div>
+      <div class="version" dir="rtl">${ver}${DESKTOP && window.ganDesktop.source ? ` · ${window.ganDesktop.source() === 'online' ? 'מחובר' : 'לא מקוון'}` : ''}</div></div>`);
     v.addEventListener('click', (e) => {
       if (e.target.closest('[data-quit]')) {
         Sfx.play('click');
@@ -252,10 +336,11 @@ const App = {
         const key = segBtn.parentElement.dataset.set, val = segBtn.dataset.v;
         c.settings[key] = key === 'limit' ? +val : val;
         if (key === 'limit') c.time.unlocked = false;
+        if (key === 'difficulty') for (const gs of Object.values(c.games)) { gs.adj = 0; gs.hist = []; }
       } else if (tog) c.settings.sound = !c.settings.sound;
       else if (act && act.dataset.act === 'unlock') { c.time.unlocked = true; }
       else if (act && act.dataset.act === 'reset') {
-        return this.confirm(`לאפס את כל ההתקדמות של ${KIDS[id].name}? (כוכבים, מדבקות ושיאים)`, () => { Store.reset(id); this.parents(); });
+        return this.confirm(`לאפס את כל ההתקדמות של ${KIDS[id].name}? (שלבים, כוכבים, מדבקות ובגדים)`, () => { Store.reset(id); if (this.child === id) ART.outfit = Store.child(id).outfit; this.parents(); });
       } else return;
       Sfx.play('click'); Store.save();
       if (this.child) Sfx.enabled = Store.child(this.child).settings.sound;
@@ -322,11 +407,13 @@ const App = {
     this.fit();
     addEventListener('resize', () => this.fit());
     document.addEventListener('fullscreenchange', () => this.onFullscreenChange());
-    $('#bg').innerHTML = BG_SVG;
+    this.setWorld(null);
     $('#topbar').addEventListener('click', (e) => {
       const a = e.target.closest('[data-act]'); if (!a) return;
       const act = a.dataset.act;
       if (act === 'home') { Sfx.play('click'); this.home(); }
+      else if (act === 'path') { Sfx.play('click'); Levels.path(this.round ? this.round.plan.gid : this.pathGame); }
+      else if (act === 'drawhome') { Sfx.play('click'); Draw.home(); }
       else if (act === 'switch') { Sfx.play('click'); this.profiles(); }
       else if (act === 'fs') {
         Sfx.play('click');
@@ -341,6 +428,7 @@ const App = {
       else if (s === 'profiles') Voice.say('who_plays');
       else if (s === 'map') Voice.say('hello_' + this.child);
       else if (s === 'album') Voice.say('t_album');
+      else if (s === 'draw') Voice.say('t_draw');
       else if (s === 'result') Voice.say('praise_0');
     });
     setInterval(() => this.tick(), 1000);
