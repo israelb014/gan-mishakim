@@ -28,6 +28,9 @@ jobs:
           cp -r index.html icon.svg manifest.webmanifest sw.js css js fonts audio content _site/
           touch _site/.nojekyll
 
+      - name: Tools for the APT repository
+        run: sudo apt-get install -y --no-install-recommends apt-utils
+
       - name: APT repository (signed)
         env:
           GH_TOKEN: ${{ github.token }}
