@@ -1,5 +1,5 @@
 /* Offline support: precache every file on install, serve cache-first. */
-const VERSION = '768b5895c1';
+const VERSION = '15e2c51c64';
 const CACHE = 'gan-mishakim-' + VERSION;
 const ASSETS = [
   './',

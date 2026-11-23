@@ -348,6 +348,7 @@ button.pill:active, .press:active { transform: scale(.95); }
 .pbtn.ok { background: var(--teal); color: #fff; }
 .pbtn + .pbtn { margin-inline-start: 16px; }
 .parents-title { top: 140px; font-size: 86px; }
+.quit-btn { position: absolute; top: 166px; left: 70px; height: 80px; padding: 0 44px; font-size: 40px; }
 .pexit { position: absolute; top: 160px; left: 330px; }
 
 /* ---------- overlays ---------- */

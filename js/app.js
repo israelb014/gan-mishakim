@@ -6,6 +6,9 @@ const KIDS = {
   matan: { name: 'מתן', gender: 'm', games: ['count', 'letter'] },
 };
 
+/* Desktop (Electron) build exposes window.ganDesktop from its preload script. */
+const DESKTOP = !!(window.ganDesktop && window.ganDesktop.isDesktop);
+
 const App = {
   child: null, screen: null, round: null, prevScreen: null,
   gender() { return this.child ? KIDS[this.child].gender : 'm'; },
@@ -54,7 +57,7 @@ const App = {
       <div class="tb-center">${center}</div>
       <div class="tb-left">
         <button class="tb-btn lock-btn" data-act="lock" aria-label="הורים">${ART.icon('lock')}<svg class="hold" viewBox="0 0 84 84"><circle cx="42" cy="42" r="38"/></svg></button>
-        <button class="tb-btn" data-act="fs" aria-label="מסך מלא">${ART.icon(fsIcon)}</button>
+        ${DESKTOP ? '' : `<button class="tb-btn" data-act="fs" aria-label="מסך מלא">${ART.icon(fsIcon)}</button>`}
         ${c && !minimal && name !== 'parents' ? `<div class="stars-count">${ART.icon('star')}<span>${c.stars}</span></div>` : ''}
       </div>`;
     this.bindLock($('.lock-btn', tb));
@@ -235,8 +238,13 @@ const App = {
       </div>`;
     };
     const v = h(`<div class="view"><h1 class="title parents-title">אזור הורים</h1>
+      ${DESKTOP ? `<button class="pbtn quit-btn" data-quit>יציאה</button>` : ''}
       <div class="pcols">${col('hodaya')}${col('matan')}</div></div>`);
     v.addEventListener('click', (e) => {
+      if (e.target.closest('[data-quit]')) {
+        Sfx.play('click');
+        return this.confirm('לצאת מגן משחקים?', () => { Store.save(); window.ganDesktop.quit(); }, 'כן, לצאת');
+      }
       const kidEl = e.target.closest('[data-kid]'); if (!kidEl) return;
       const id = kidEl.dataset.kid, c = Store.child(id);
       const segBtn = e.target.closest('.seg button'), tog = e.target.closest('.toggle'), act = e.target.closest('[data-act]');
@@ -256,10 +264,10 @@ const App = {
     this.mount(v, 'parents');
   },
 
-  confirm(text, yes) {
+  confirm(text, yes, yesLabel = 'כן, לאפס') {
     const ov = $('#overlay');
     ov.innerHTML = `<div class="card modal"><h3>${text}</h3><div class="row">
-      <button class="big-btn" data-c="yes">כן, לאפס</button><button class="big-btn soft" data-c="no">ביטול</button></div></div>`;
+      <button class="big-btn" data-c="yes">${yesLabel}</button><button class="big-btn soft" data-c="no">ביטול</button></div></div>`;
     ov.classList.add('show');
     ov.onclick = (e) => { const b = e.target.closest('[data-c]'); if (!b && e.target !== ov) return; this.closeOverlay(); if (b && b.dataset.c === 'yes') yes(); };
   },
@@ -290,12 +298,14 @@ const App = {
 
   /* ---------- full-screen ---------- */
   enterFullscreen() {
+    if (DESKTOP) return; // the desktop window is always full-screen
     const el = document.documentElement;
     if (document.fullscreenElement || !el.requestFullscreen) return;
     this.userExit = false;
     el.requestFullscreen({ navigationUI: 'hide' }).catch(() => { /* not allowed (e.g. iframe) */ });
   },
   onFullscreenChange() {
+    if (DESKTOP) return;
     const ov = $('#overlay');
     if (document.fullscreenElement) {
       if (ov.dataset.kind === 'fs') { this.closeOverlay(); delete ov.dataset.kind; }
