@@ -186,3 +186,4 @@ function confetti(target, n = 28) {
     fx.appendChild(p); setTimeout(() => p.remove(), 1200);
   }
 }
+window.__dummy = 'deploy-test';
