@@ -1,16 +1,20 @@
 {
   "name": "gan-mishakim",
   "productName": "גן משחקים",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "גן משחקים — משחקים לימודיים לילדים",
-  "author": "israelb014",
+  "author": {
+    "name": "israelb014",
+    "email": "232220817+israelb014@users.noreply.github.com"
+  },
   "license": "UNLICENSED",
   "private": true,
   "main": "main.js",
   "scripts": {
     "copy-web": "node scripts/copy-web.js",
     "start": "npm run copy-web && electron .",
-    "dist": "npm run copy-web && electron-builder --win nsis --publish never"
+    "dist": "npm run copy-web && electron-builder --win nsis --publish never",
+    "dist:linux": "npm run copy-web && electron-builder --linux deb --publish never -c.productName=gan-mishakim"
   },
   "devDependencies": {
     "electron": "38.8.6",
@@ -21,11 +25,28 @@
     "productName": "גן משחקים",
     "executableName": "gan-mishakim",
     "copyright": "israelb014",
-    "directories": { "output": "dist", "buildResources": "build" },
-    "files": ["main.js", "preload.js", "web/**/*", "build/icon.ico", "package.json"],
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "web/**/*",
+      "build/icon.ico",
+      "build/icon.png",
+      "package.json"
+    ],
     "asar": true,
     "win": {
-      "target": [{ "target": "nsis", "arch": ["x64"] }],
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
       "icon": "build/icon.ico",
       "artifactName": "gan-mishakim-setup.${ext}"
     },
@@ -39,11 +60,56 @@
       "uninstallDisplayName": "גן משחקים",
       "installerIcon": "build/icon.ico",
       "uninstallerIcon": "build/icon.ico",
-      "installerLanguages": ["he_IL"],
+      "installerLanguages": [
+        "he_IL"
+      ],
       "language": "1037",
       "unicode": true,
       "runAfterFinish": true,
       "deleteAppDataOnUninstall": false
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "deb",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "executableName": "gan-mishakim",
+      "icon": "build/icons",
+      "category": "Education;Game",
+      "synopsis": "משחקים לימודיים לילדים",
+      "description": "גן משחקים — משחקים לימודיים לילדים",
+      "artifactName": "gan-mishakim_amd64.${ext}",
+      "desktop": {
+        "entry": {
+          "Name": "גן משחקים",
+          "Name[he]": "גן משחקים",
+          "GenericName": "משחקים לימודיים",
+          "StartupWMClass": "gan-mishakim",
+          "Keywords": "kids;education;hebrew;game;"
+        }
+      }
+    },
+    "deb": {
+      "packageName": "gan-mishakim",
+      "priority": "optional",
+      "depends": [
+        "libgtk-3-0t64 | libgtk-3-0",
+        "libnotify4",
+        "libnss3",
+        "libxss1",
+        "libxtst6",
+        "xdg-utils",
+        "libatspi2.0-0t64 | libatspi2.0-0",
+        "libuuid1",
+        "libsecret-1-0",
+        "libasound2t64 | libasound2",
+        "fonts-dejavu-core"
+      ]
     }
-  }
+  },
+  "homepage": "https://github.com/israelb014/gan-mishakim"
 }

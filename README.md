@@ -4,6 +4,7 @@ Hebrew educational games for two kids, PC full-screen. Vanilla HTML/CSS/JS, no b
 
 - **Play:** https://israelb014.github.io/gan-mishakim/
 - **[הורדה למחשב](https://github.com/israelb014/gan-mishakim/releases/latest/download/gan-mishakim-setup.exe)** — Windows program (works offline, always full-screen; exit via "יציאה" in the parents corner).
+- **[הורדה ללינוקס](https://github.com/israelb014/gan-mishakim/releases/latest/download/gan-mishakim_amd64.deb)** — `.deb` for Linux Mint 22 / Ubuntu 24.04 (x64): `sudo apt install ./gan-mishakim_amd64.deb`, then open "גן משחקים" from the menu.
 - **Kiosk (Windows):** double-click `start-kiosk.bat` (Edge, full-screen kiosk). Exit with Alt+F4.
 - **Parents corner:** press and hold the lock icon (top-left) for 3 seconds, then solve the sum.
 
@@ -20,9 +21,10 @@ Electron wrapper around the same web files: `desktop/scripts/copy-web.js` copies
 ```
 cd desktop && npm ci
 npm start        # run locally
-npm run dist     # build desktop/dist/gan-mishakim-setup.exe (on Windows)
-python tools/make_icon.py   # regenerate desktop/build/icon.ico from Popo's SVG
+npm run dist        # build desktop/dist/gan-mishakim-setup.exe (on Windows)
+npm run dist:linux  # build desktop/dist/gan-mishakim_amd64.deb (on Linux)
+python tools/make_icon.py   # regenerate desktop/build/icon.ico + icons/16..512 PNGs from Popo's SVG
 ```
-Release: push a tag like `v1.0.1`; GitHub Actions builds the installer and attaches it to the release.
+Release: push a tag like `v1.0.2`; GitHub Actions builds the Windows installer and the Linux .deb and attaches both to the release.
 
 The mockups in `design/` are reference only; the app doesn't use them.
