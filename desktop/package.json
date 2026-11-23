@@ -1,0 +1,49 @@
+{
+  "name": "gan-mishakim",
+  "productName": "גן משחקים",
+  "version": "1.0.0",
+  "description": "גן משחקים — משחקים לימודיים לילדים",
+  "author": "israelb014",
+  "license": "UNLICENSED",
+  "private": true,
+  "main": "main.js",
+  "scripts": {
+    "copy-web": "node scripts/copy-web.js",
+    "start": "npm run copy-web && electron .",
+    "dist": "npm run copy-web && electron-builder --win nsis --publish never"
+  },
+  "devDependencies": {
+    "electron": "38.8.6",
+    "electron-builder": "26.0.20"
+  },
+  "build": {
+    "appId": "io.github.israelb014.ganmishakim",
+    "productName": "גן משחקים",
+    "executableName": "gan-mishakim",
+    "copyright": "israelb014",
+    "directories": { "output": "dist", "buildResources": "build" },
+    "files": ["main.js", "preload.js", "web/**/*", "build/icon.ico", "package.json"],
+    "asar": true,
+    "win": {
+      "target": [{ "target": "nsis", "arch": ["x64"] }],
+      "icon": "build/icon.ico",
+      "artifactName": "gan-mishakim-setup.${ext}"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "allowElevation": false,
+      "createDesktopShortcut": "always",
+      "createStartMenuShortcut": true,
+      "shortcutName": "גן משחקים",
+      "uninstallDisplayName": "גן משחקים",
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "installerLanguages": ["he_IL"],
+      "language": "1037",
+      "unicode": true,
+      "runAfterFinish": true,
+      "deleteAppDataOnUninstall": false
+    }
+  }
+}
