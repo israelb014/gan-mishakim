@@ -18,7 +18,24 @@ try:
         pg.on('requestfailed', lambda r: errors.append(f'requestfailed: {r.url}'))
         pg.on('response', lambda r: r.status >= 400 and errors.append(f'HTTP {r.status}: {r.url}'))
         pg.goto('http://localhost:8765/'); pg.wait_for_timeout(1200)
-        shot = lambda n, ms=700: (pg.wait_for_timeout(ms), pg.screenshot(path=str(OUT / f'{n}.png')))
+        overlaps = []
+        OVERLAP_JS = '''() => {
+          const p = document.querySelector('#popo'); if (!p || p.classList.contains('away')) return [];
+          // painted extent of Popo = union of his SVG shapes (not the transparent box)
+          let L = 1e9, T = 1e9, R = -1e9, B = -1e9;
+          p.querySelectorAll('.body svg circle, .body svg rect, .body svg path, .body svg ellipse').forEach(e => {
+            const r = e.getBoundingClientRect(); if (!r.width) return;
+            L = Math.min(L, r.left); T = Math.min(T, r.top); R = Math.max(R, r.right); B = Math.max(B, r.bottom); });
+          const hits = [];
+          document.querySelectorAll('#screen .opt, #screen button, #screen .card, #screen .tap, #screen .album-btn, #overlay button, #overlay .card').forEach(e => {
+            const r = e.getBoundingClientRect();
+            const ox = Math.min(R, r.right) - Math.max(L, r.left), oy = Math.min(B, r.bottom) - Math.max(T, r.top);
+            if (ox > 2 && oy > 2) hits.push((e.className.baseVal ?? e.className) + ' ' + Math.round(ox) + 'x' + Math.round(oy)); });
+          return hits; }'''
+        def shot(n, ms=700):
+            pg.wait_for_timeout(ms); pg.screenshot(path=str(OUT / f'{n}.png'))
+            hits = pg.evaluate(OVERLAP_JS)
+            if hits: overlaps.append(f'{n}: {hits}')
         js = pg.evaluate
 
         shot('01_profiles')
@@ -75,6 +92,8 @@ try:
         b.close()
 finally:
     srv.terminate()
+print('popo overlaps:', len(overlaps))
+for o in overlaps: print('  ', o)
 print('console/page errors:', len(errors))
 for e in errors: print('  ', e)
 print('screenshots in', OUT)

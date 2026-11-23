@@ -99,18 +99,19 @@ button.pill:active, .press:active { transform: scale(.95); }
 .lock-btn.holding svg.hold circle { transition: stroke-dashoffset 3s linear; stroke-dashoffset: 0; }
 
 /* ---------- Popo ---------- */
-#popo { position: absolute; z-index: 30; left: 26px; bottom: 6px; width: 250px; height: 284px; cursor: pointer; }
+#popo { position: absolute; z-index: 30; right: 26px; bottom: 6px; width: 250px; height: 284px; cursor: pointer; transition: width .3s, height .3s; }
+#popo .body svg { transform: scaleX(-1); } /* face the content, wave like the mockups */
 #popo .body { width: 100%; height: 100%; animation: bob 2.6s ease-in-out infinite; transform-origin: 50% 100%; }
 #popo.hop .body { animation: hop .4s ease-out; }
 @keyframes bob { 0%, 100% { transform: translateY(0) scale(1, 1); } 50% { transform: translateY(-10px) scale(1.01, .99); } }
 @keyframes hop { 0% { transform: translateY(0); } 40% { transform: translateY(-34px) scale(.97, 1.04); } 100% { transform: translateY(0); } }
 #popo .bubble {
-  position: absolute; bottom: 250px; left: 120px; white-space: nowrap;
+  position: absolute; bottom: calc(100% - 30px); right: 110px; white-space: nowrap;
   background: #fff; border-radius: 34px; padding: 22px 34px; font-size: 44px; font-weight: 600;
-  box-shadow: var(--shadow); opacity: 0; transform: translateY(10px) scale(.9); transform-origin: 0 100%;
+  box-shadow: var(--shadow); opacity: 0; transform: translateY(10px) scale(.9); transform-origin: 100% 100%;
   transition: opacity .25s, transform .25s; pointer-events: none;
 }
-#popo .bubble::after { content: ''; position: absolute; left: 40px; bottom: -18px; border: 14px solid transparent; border-top: 20px solid #fff; border-bottom: 0; }
+#popo .bubble::after { content: ''; position: absolute; right: 40px; bottom: -18px; border: 14px solid transparent; border-top: 20px solid #fff; border-bottom: 0; }
 #popo .bubble.show { opacity: 1; transform: none; }
 #popo.away { display: none; }
 
@@ -325,7 +326,7 @@ button.pill:active, .press:active { transform: scale(.95); }
 .keypad button:active { transform: scale(.92); }
 .keypad .ok { background: var(--teal); color: #fff; }
 .keypad .ico { font-size: 56px; }
-.pcols { position: absolute; top: 260px; left: 320px; right: 70px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; }
+.pcols { position: absolute; top: 260px; left: 70px; right: 320px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; }
 .pcol { padding: 30px 40px 34px; }
 .pcol .ph { display: flex; align-items: center; gap: 20px; font-size: 56px; font-weight: 700; margin-bottom: 14px; }
 .pcol .ph .avatar { width: 90px; height: 90px; }

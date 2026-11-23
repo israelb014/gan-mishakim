@@ -269,6 +269,7 @@ const Round = (() => {
     App.round = st;
     const view = h(`<div class="view game g-${gid}"><div class="gbody"></div>${ringSVG(0, '<span>1<small>/10</small></span>', 11, 'prog')}</div>`);
     App.mount(view, 'game');
+    $('#popo').dataset.screen = 'game-' + gid;
     const body = $('.gbody', view), prog = $('.prog', view);
 
     function ask() {

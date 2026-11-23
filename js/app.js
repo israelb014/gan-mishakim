@@ -24,6 +24,7 @@ const App = {
     this.screen = name;
     const scr = $('#screen'); scr.innerHTML = ''; scr.appendChild(view);
     $('#popo').classList.toggle('away', name === 'rest');
+    $('#popo').dataset.screen = name;
     this.setPopo(name === 'parents' ? 'glasses' : name === 'game' || name === 'album' ? 'point' : 'happy');
     this.topbar(name);
   },
