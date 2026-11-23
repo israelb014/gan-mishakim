@@ -29,7 +29,7 @@ sudo apt install gan-mishakim
 python -m http.server 8000            # then open http://localhost:8000
 python tools/make_strings.py          # rebuild content/strings.json (all spoken text) + js/content.js
 pip install edge-tts && python tools/gen_audio.py   # generate missing audio/<id>.mp3
-python tools/update_sw.py             # refresh the offline cache list in sw.js after changing files
+python tools/update_sw.py             # optional, for local testing: the deploy stamps sw.js with the commit hash on every push
 pip install playwright && python tools/check.py     # plays every game, screenshots, error/audio checks
 ```
 ### Desktop program (`desktop/`)

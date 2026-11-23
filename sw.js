@@ -1,6 +1,13 @@
-/* Offline support: precache every file on install, serve cache-first. */
-const VERSION = '535a91748b';
-const CACHE = 'gan-mishakim-' + VERSION;
+/* גן משחקים service worker.
+   - Code and content (index.html, .js, .css, .json, the manifest): network first, so a new release shows up
+     at once; the cache is used only when the network fails (offline).
+   - Audio, fonts and images never change under the same name: cache first.
+   VERSION is replaced with the commit hash on every deploy (tools/update_sw.py, run by .github/workflows/pages.yml),
+   so every push installs a new worker with a new cache; old caches are deleted when it activates.
+   Saved progress and drawings live in localStorage / IndexedDB / the desktop app's files, never in these caches. */
+const VERSION = 'dev';
+const PREFIX = 'gan-mishakim-';
+const CACHE = PREFIX + VERSION;
 const ASSETS = [
   './',
   'index.html',
@@ -455,35 +462,57 @@ const ASSETS = [
   'audio/word_zebra.mp3'
 ];
 
+const STATIC = /\.(mp3|ogg|wav|woff2?|ttf|otf|png|jpe?g|gif|webp|svg|ico)$/i;
+const isStatic = (url) => STATIC.test(new URL(url, location.href).pathname);
+
+/* Precache: code is fetched fresh (bypassing the HTTP cache); audio/fonts/images are copied from an older
+   cache when present, so a release does not download every sound again. */
 self.addEventListener('install', (e) => {
-  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting()));
+  e.waitUntil((async () => {
+    const cache = await caches.open(CACHE);
+    await Promise.all(ASSETS.map(async (url) => {
+      if (isStatic(url)) {
+        const old = await caches.match(url, { ignoreSearch: true });
+        if (old) return cache.put(url, old);
+      }
+      const res = await fetch(new Request(url, { cache: 'reload' }));
+      if (!res.ok) throw new Error(url + ' ' + res.status);
+      return cache.put(url, res);
+    }));
+    await self.skipWaiting();
+  })());
 });
+
 self.addEventListener('activate', (e) => {
-  e.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k))))
-    .then(() => self.clients.claim()));
+  e.waitUntil((async () => {
+    const keys = await caches.keys();
+    await Promise.all(keys.filter((k) => k.startsWith(PREFIX) && k !== CACHE).map((k) => caches.delete(k)));
+    await self.clients.claim();
+  })());
 });
-/* Code and pages: network first (so updates show up immediately), cache when offline or slow.
-   Audio and fonts never change under the same name: cache first. */
-const STATIC = /\.(mp3|woff2)$/;
-function fromNetwork(req) {
-  return Promise.race([
-    fetch(req, { cache: 'no-cache' }).then((res) => {
-      if (res.ok && new URL(req.url).origin === location.origin) { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(req, copy)); }
-      return res;
-    }),
-    new Promise((_, rej) => setTimeout(() => rej(new Error('slow')), 4000)),
-  ]);
+
+function save(req, res) {
+  if (res && res.ok && res.type === 'basic') { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(req, copy)).catch(() => {}); }
+  return res;
 }
+async function networkFirst(req) {
+  try {
+    return save(req, await fetch(req, { cache: 'no-cache' })); // revalidate with the server, never a stale HTTP-cache copy
+  } catch (err) { // offline
+    const hit = await caches.match(req, { ignoreSearch: true });
+    if (hit) return hit;
+    if (req.mode === 'navigate') { const page = await caches.match('index.html'); if (page) return page; }
+    throw err;
+  }
+}
+async function cacheFirst(req) {
+  const hit = await caches.match(req, { ignoreSearch: true });
+  return hit || save(req, await fetch(req));
+}
+
 self.addEventListener('fetch', (e) => {
   const req = e.request;
   if (req.method !== 'GET' || new URL(req.url).origin !== location.origin) return;
-  if (STATIC.test(new URL(req.url).pathname)) {
-    e.respondWith(caches.match(req, { ignoreSearch: true }).then((hit) => hit || fetch(req).then((res) => {
-      if (res.ok) { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(req, copy)); }
-      return res;
-    })));
-    return;
-  }
-  e.respondWith(fromNetwork(req).catch(() => caches.match(req, { ignoreSearch: true })
-    .then((hit) => hit || (req.mode === 'navigate' ? caches.match('index.html') : Response.error()))));
+  if (req.headers.has('range')) return; // media range requests: let the browser handle them
+  e.respondWith(isStatic(req.url) ? cacheFirst(req) : networkFirst(req));
 });

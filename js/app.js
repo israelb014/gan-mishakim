@@ -44,6 +44,7 @@ const App = {
     $('#popo').dataset.screen = name;
     this.setPopo(name === 'parents' ? 'glasses' : ['game', 'album', 'draw'].includes(name) ? 'point' : 'happy');
     this.topbar(name);
+    this.maybeReload();
   },
 
   setPopo(mood, force) {
@@ -296,7 +297,7 @@ const App = {
       ans.innerHTML = typed || '&nbsp;';
     };
   },
-  closeOverlay() { const ov = $('#overlay'); ov.classList.remove('show'); ov.innerHTML = ''; ov.onclick = null; },
+  closeOverlay() { const ov = $('#overlay'); ov.classList.remove('show'); ov.innerHTML = ''; ov.onclick = null; this.maybeReload(); },
 
   parents() {
     if (this.screen !== 'parents') this.prevScreen = this.screen;
@@ -434,10 +435,50 @@ const App = {
     setInterval(() => this.tick(), 1000);
     document.addEventListener('visibilitychange', () => { if (document.hidden) Store.save(); });
     addEventListener('pagehide', () => Store.save());
-    this.profiles();
-    if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
-      navigator.serviceWorker.register('sw.js').catch(() => {});
-    }
+    this.resume();
+    this.initUpdates();
+  },
+
+  /* ---------- updates: a new release (new service worker) reloads the page, but only at a safe moment ---------- */
+  initUpdates() {
+    if (!('serviceWorker' in navigator) || !location.protocol.startsWith('http')) return; // bundled desktop copy: no worker
+    const sw = navigator.serviceWorker;
+    let controlled = !!sw.controller;
+    sw.addEventListener('controllerchange', () => {
+      if (!controlled) { controlled = true; return; } // first install on this device: the page is already current
+      this.updateReady = true;
+      this.maybeReload();
+    });
+    sw.register('sw.js', { updateViaCache: 'none' }).then((reg) => {
+      // The kiosk / desktop window stays open for days: look for a new release regularly, and when coming back.
+      let last = Date.now();
+      const check = (minGap) => { if (Date.now() - last >= minGap) { last = Date.now(); reg.update().catch(() => {}); } };
+      setInterval(() => check(0), 15 * 60 * 1000);
+      document.addEventListener('visibilitychange', () => { if (!document.hidden) check(60 * 1000); });
+      addEventListener('online', () => check(0));
+      this.checkUpdate = () => check(2 * 60 * 1000);
+    }).catch(() => {});
+  },
+  /** Reload for the new version only on the profile screen or a map — never during a level, a drawing or an overlay. */
+  maybeReload() {
+    if (!this.updateReady) { if (['profiles', 'map', 'path'].includes(this.screen) && this.checkUpdate) this.checkUpdate(); return; }
+    if (this._reloading || !['profiles', 'map', 'path'].includes(this.screen)) return;
+    const ov = $('#overlay');
+    if (ov.classList.contains('show') && ov.dataset.kind !== 'fs') return; // parents' gate is open: wait until it closes
+    this._reloading = true;
+    Store.save();
+    try {
+      if (this.child) sessionStorage.setItem('gan-resume', JSON.stringify({ child: this.child, path: this.screen === 'path' ? this.pathGame : null }));
+    } catch (e) { /* storage blocked: start on the profile screen */ }
+    location.reload();
+  },
+  /** After an update reload, come back to the same child's map (or game path) instead of the profile screen. */
+  resume() {
+    let r = null;
+    try { r = JSON.parse(sessionStorage.getItem('gan-resume') || 'null'); sessionStorage.removeItem('gan-resume'); } catch (e) { /* ignore */ }
+    if (!r || !KIDS[r.child]) return this.profiles();
+    this.selectChild(r.child);
+    if (r.path && this.screen === 'map' && KIDS[r.child].games.includes(r.path)) Levels.path(r.path);
   },
 };
 

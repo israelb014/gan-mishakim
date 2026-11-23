@@ -22,6 +22,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Service worker version = commit hash (a new cache on every push)
+        run: python3 tools/update_sw.py "${GITHUB_SHA::10}"
+
       - name: Website files
         run: |
           mkdir -p _site
