@@ -1,0 +1,9 @@
+<!doctype html><meta charset="utf-8"><title>migrate</title>
+<script>
+/* One-time: copy progress saved by v1.0.x (localStorage of the bundled page) into the app's own storage. */
+try {
+  const v = localStorage.getItem('gan-mishakim-v1');
+  if (v && !window.ganDesktop.store.get('gan-mishakim-v1')) window.ganDesktop.store.set('gan-mishakim-v1', v);
+} catch (e) { /* nothing to migrate */ }
+window.ganDesktop.migrated();
+</script>

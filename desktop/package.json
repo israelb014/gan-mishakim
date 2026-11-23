@@ -1,7 +1,7 @@
 {
   "name": "gan-mishakim",
   "productName": "גן משחקים",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "גן משחקים — משחקים לימודיים לילדים",
   "author": {
     "name": "israelb014",
@@ -32,6 +32,7 @@
     "files": [
       "main.js",
       "preload.js",
+      "migrate.html",
       "web/**/*",
       "build/icon.ico",
       "build/icon.png",
@@ -109,7 +110,18 @@
         "libasound2t64 | libasound2",
         "fonts-dejavu-core"
       ]
-    }
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "israelb014",
+        "repo": "gan-mishakim",
+        "releaseType": "release"
+      }
+    ]
   },
-  "homepage": "https://github.com/israelb014/gan-mishakim"
+  "homepage": "https://github.com/israelb014/gan-mishakim",
+  "dependencies": {
+    "electron-updater": "6.8.11"
+  }
 }
