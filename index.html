@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>גן משחקים</title>
+<meta name="theme-color" content="#FFF6E6">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preload" href="fonts/fredoka-hebrew.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- soft paper-layer shadow -->
+    <filter id="pl" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="3" stdDeviation="2.6" flood-color="#5a3e1b" flood-opacity=".22"/>
+    </filter>
+    <!-- big soft shadow for background shapes -->
+    <filter id="pbig" x="-10%" y="-30%" width="120%" height="170%">
+      <feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#8a6a3a" flood-opacity=".14"/>
+    </filter>
+    <!-- white die-cut sticker outline + shadow -->
+    <filter id="sticker" x="-20%" y="-20%" width="140%" height="140%">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="7" result="d"/>
+      <feFlood flood-color="#fff"/><feComposite in2="d" operator="in" result="w"/>
+      <feDropShadow in="w" dx="0" dy="4" stdDeviation="4" flood-color="#5a3e1b" flood-opacity=".3" result="ws"/>
+      <feMerge><feMergeNode in="ws"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <radialGradient id="glow" cx="50%" cy="46%" r="60%">
+      <stop offset="0" stop-color="#FFFEF8"/><stop offset=".55" stop-color="#FFF8EA"/><stop offset="1" stop-color="#FCEFD8"/>
+    </radialGradient>
+  </defs>
+</svg>
+
+<div id="stage">
+  <div id="bg"></div>
+  <header id="topbar" class="hidden"></header>
+  <main id="screen"></main>
+  <div id="popo" role="button" aria-label="פופו"><div class="bubble"></div><div class="body"></div></div>
+  <div id="fx"></div>
+  <div id="overlay"></div>
+  <div id="grain"></div>
+</div>
+
+<script src="js/art.js"></script>
+<script src="js/core.js"></script>
+<script src="js/games.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

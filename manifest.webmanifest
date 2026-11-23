@@ -1,0 +1,12 @@
+{
+  "name": "גן משחקים",
+  "short_name": "גן משחקים",
+  "lang": "he",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "background_color": "#FFF6E6",
+  "theme_color": "#FFF6E6",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}
