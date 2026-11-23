@@ -39,7 +39,11 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: gan-mishakim-setup
-          path: desktop/dist/gan-mishakim-setup.exe
+          # latest.yml + .blockmap let the installed app update itself (electron-updater)
+          path: |
+            desktop/dist/gan-mishakim-setup.exe
+            desktop/dist/gan-mishakim-setup.exe.blockmap
+            desktop/dist/latest.yml
           if-no-files-found: error
 
   linux:
@@ -82,6 +86,9 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/v')
     needs: [windows, linux]
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: write
     steps:
       - uses: actions/download-artifact@v4
         with:
@@ -95,6 +102,8 @@ jobs:
           fail_on_unmatched_files: true
           files: |
             out/gan-mishakim-setup.exe
+            out/gan-mishakim-setup.exe.blockmap
+            out/latest.yml
             out/gan-mishakim_amd64.deb
           body: |
             **הורדה למחשב (Windows):** הורידו את `gan-mishakim-setup.exe` והפעילו אותו. ההתקנה מהירה, למשתמש הנוכחי בלבד, ויוצרת קיצורי דרך "גן משחקים" בשולחן העבודה ובתפריט התחל.
@@ -102,3 +111,10 @@ jobs:
 
             **לינוקס (Linux Mint 22 / Ubuntu 24.04, x64):** הורידו את `gan-mishakim_amd64.deb` והתקינו בלחיצה כפולה, או בטרמינל:
             `sudo apt install ./gan-mishakim_amd64.deb` — ואז "גן משחקים" מופיע בתפריט תחת חינוך / משחקים.
+            עדכונים אוטומטיים בלינוקס: הוסיפו את מאגר ה-APT (הוראות ב-README) ומנהל העדכונים של Mint יציע כל גרסה חדשה.
+            ב-Windows התוכנה מתעדכנת לבד ברקע.
+
+      - name: Publish the APT repository (rebuild Pages with the new .deb)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --repo "$GITHUB_REPOSITORY" --ref main
